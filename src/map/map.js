@@ -40,7 +40,7 @@ export default function Map({ navigation }) {
       <View>
         <Button
           onPress={() => {
-            navigation.push("Search");
+            navigation.push("Home");
           }}
           title='Search'
         ></Button>

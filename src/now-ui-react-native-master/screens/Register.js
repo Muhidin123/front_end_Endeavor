@@ -179,6 +179,7 @@ export default function Register({ navigation }) {
                           </Block>
                           <Block width={width * 0.8}>
                             <Input
+                              textContentType={'emailAddress'}
                               onChangeText={(text) => setForm({ ...form, email: text })}
                               placeholder="Email"
                               style={styles.inputs}
@@ -195,6 +196,8 @@ export default function Register({ navigation }) {
                           </Block>
                           <Block width={width * 0.8} style={{ marginBottom: 5 }}>
                             <Input
+                              multiline={true}
+                              textAlignVertical="top"
                               onChangeText={(text) => setForm({ ...form, bio: text })}
                               placeholder="Bio"
                               style={styles.inputs}
