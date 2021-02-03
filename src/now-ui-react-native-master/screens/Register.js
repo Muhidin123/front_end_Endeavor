@@ -12,6 +12,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import fetchCall from '../../../Fetch';
 import { Button, Icon, Input } from '../components';
 import { Images, nowTheme } from '../constants';
+import { log } from 'react-native-reanimated';
 
 const { width, height } = Dimensions.get('screen');
 const URL = 'http://localhost:3000/api/v1/users';
@@ -21,11 +22,20 @@ const DismissKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>{children}</TouchableWithoutFeedback>
 );
 
-const handleSubmit = (e) => {
-  fetchReq.generalFetch(URL, fetchReq.makeOptions('POST', e)).then(console.log);
-};
-
-export default function Register() {
+export default function Register({ navigation }) {
+  const handleSubmit = (e) => {
+    let body = { user: e };
+    fetchReq.generalFetch(URL, fetchReq.makeOptions('POST', body)).then((data) => {
+      if (!data.user.error) {
+        navigation.push('Welcome');
+        // navigation.reset({           RESET NAVIGATION SO USER CAN NOT GO BACK
+        //   index: 0,
+        //   routes: [{ name: 'Welcome' }],
+        // });
+      }
+      console.log(data.error);
+    });
+  };
   const initialState = {
     username: '',
     email: '',

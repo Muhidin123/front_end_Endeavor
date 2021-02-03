@@ -95,6 +95,10 @@ export default class LoginScreen extends Component {
           this.textInputPassword.clear();
           this.textInputUsername.clear();
           this.props.navigation.push("Welcome");
+          // this.props.navigation.reset({        RESET NAVIGATION SO USER CAN NOT GO BACK
+          //   index: 0,
+          //   routes: [{ name: "Welcome" }],
+          // });
         }
         console.log("Error");
       });
