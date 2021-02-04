@@ -38,7 +38,7 @@ function Card(props) {
           />
         </Block>
       </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback onPress={() => navigation.navigate('Pro')}>
+      <TouchableWithoutFeedback onPress={() => navigation.navigate('Search')}>
         <Block flex space="between" style={styles.cardDescription}>
           <Block flex>
             <Text

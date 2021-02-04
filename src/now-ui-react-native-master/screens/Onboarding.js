@@ -20,46 +20,40 @@ export default class Onboarding extends React.Component {
           />
           <Block space="between" style={styles.padded}>
             <Block>
-              <Block middle>
-                <Image source={Images.NowLogo} style={{ width: 115, height: 124, bottom: 200, position: 'absolute' }} />
-              </Block>
+              <Block middle></Block>
               <Block>
                 <Block middle>
                   <Text
                     style={{
-                      fontFamily: 'montserrat-regular', bottom: 50, position: 'absolute', letterSpacing: 2, paddingHorizontal: 20, textAlign: 'center'
+                      bottom: 50,
+                      position: 'absolute',
+                      letterSpacing: 2,
+                      paddingHorizontal: 20,
+                      textAlign: 'center',
                     }}
                     color="white"
                     size={44}
                   >
-                    Now UI
-                    React Native
+                    Now UI React Native
                   </Text>
                 </Block>
               </Block>
               <Block middle row>
-                <Text
-                  color="white"
-                  size={16}
-                  style={{ fontFamily: 'montserrat-regular' }}
-                >
+                <Text color="white" size={16}>
                   Designed by
                 </Text>
-                <Image
+                {/* <Image
                   source={Images.InvisionLogo}
                   style={{
                     height: 28,
                     width: 91,
                     marginLeft: theme.SIZES.BASE
                   }}
-                />
+                /> */}
+                <Text color="white"> Muhidin</Text>
               </Block>
-              <Block middle row style={{ marginTop: 15, marginBottom: 30}}>
-                <Text
-                  color="white"
-                  size={16}
-                  style={{ fontFamily: 'montserrat-regular' }}
-                >
+              <Block middle row style={{ marginTop: 15, marginBottom: 30 }}>
+                <Text color="white" size={16}>
                   Coded by
                 </Text>
                 <Image
@@ -67,7 +61,7 @@ export default class Onboarding extends React.Component {
                   style={{
                     height: 29,
                     width: 129,
-                    marginLeft: theme.SIZES.BASE
+                    marginLeft: theme.SIZES.BASE,
                   }}
                 />
               </Block>
@@ -76,7 +70,7 @@ export default class Onboarding extends React.Component {
                 row
                 style={{
                   marginTop: theme.SIZES.BASE * 2.5,
-                  marginBottom: theme.SIZES.BASE * 2
+                  marginBottom: theme.SIZES.BASE * 2,
                 }}
               >
                 <Button
@@ -85,10 +79,7 @@ export default class Onboarding extends React.Component {
                   color={nowTheme.COLORS.PRIMARY}
                   onPress={() => navigation.navigate('App')}
                 >
-                  <Text
-                    style={{ fontFamily: 'montserrat-bold', fontSize: 14 }}
-                    color={theme.COLORS.WHITE}
-                  >
+                  <Text style={{ fontSize: 14 }} color={theme.COLORS.WHITE}>
                     GET STARTED
                   </Text>
                 </Button>
@@ -104,19 +95,19 @@ export default class Onboarding extends React.Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: theme.COLORS.BLACK,
-    marginTop: Platform.OS === 'android' ? -HeaderHeight : 0
+    marginTop: Platform.OS === 'android' ? -HeaderHeight : 0,
   },
   padded: {
     paddingHorizontal: theme.SIZES.BASE * 2,
     zIndex: 3,
     position: 'absolute',
-    bottom: Platform.OS === 'android' ? theme.SIZES.BASE * 2 : theme.SIZES.BASE * 3
+    bottom: Platform.OS === 'android' ? theme.SIZES.BASE * 2 : theme.SIZES.BASE * 3,
   },
   button: {
     width: width - theme.SIZES.BASE * 4,
     height: theme.SIZES.BASE * 3,
     shadowRadius: 0,
-    shadowOpacity: 0
+    shadowOpacity: 0,
   },
 
   gradient: {
@@ -125,6 +116,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    height: 66
-  }
+    height: 66,
+  },
 });

@@ -1,26 +1,20 @@
-// import { StatusBar } from "expo-status-bar";
 import "react-native-gesture-handler";
 import React, { createContext, useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import LoginScreen from "./src/login/login.js";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import Map from "./src/map/map.js";
-import Tabs from "./src/now-ui-react-native-master/components/Tabs.js";
 import Register from "./src/now-ui-react-native-master/screens/Register.js";
 import Home from "./src/now-ui-react-native-master/screens/Home.js";
 import fetchCall from "./Fetch";
-import GoogleSearch from "./src/search/search.js";
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import MyTabs from "./src/now-ui-react-native-master/screens/BottomTab.js";
+const Tab = createMaterialBottomTabNavigator();
 
 const Stack = createStackNavigator();
 const fetchReq = new fetchCall();
-
-const test = {
-  title: "Test context",
-  image: require("./src/now-ui-react-native-master/assets/imgs/project13.jpg"),
-  cta: "Test context",
-  horizontal: true,
-};
 
 URL = "http://localhost:3000/api/v1/trips";
 
@@ -40,13 +34,29 @@ function App() {
 
   return (
     <Context.Provider value={allTrips}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName={"Login"}>
-          <Stack.Screen name='Login' component={LoginScreen} />
+      <NavigationContainer initialRouteName='Login'>
+        {/* <Tab.Navigator>
+          <Tab.Screen name='Login' component={LoginScreen} />
+          <Tab.Screen name='Home' component={Home} />
+        </Tab.Navigator> */}
+        <Stack.Navigator>
+          {/* <Stack.Screen name='Login' component={LoginScreen} />
           <Stack.Screen name='Home' component={Home} />
           <Stack.Screen name='Welcome' component={Map} />
-          <Stack.Screen name='Search' component={Tabs} />
-          <Stack.Screen name='SignUp' component={Register} />
+          <Stack.Screen name='Search' component={Profile} />
+          <Stack.Screen name='SignUp' component={Register} /> */}
+          {/* <Tab.Screen
+            name='Home'
+            component={Home}
+            options={{
+              tabBarLabel: "Home",
+              tabBarIcon: ({ color }) => (
+                <MaterialCommunityIcons name='home' color={color} size={26} />
+              ),
+            }}
+          /> */}
+          <Stack.Screen name='Login' component={LoginScreen} />
+          <Stack.Screen name='Home' component={MyTabs} />
         </Stack.Navigator>
       </NavigationContainer>
     </Context.Provider>

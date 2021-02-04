@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { Button } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import ArButton from "../now-ui-react-native-master/components/Button";
 const URL = "http://localhost:3000/api/v1/login";
 const URL_ON_REFRESH = "http://localhost:3000/api/v1/profile";
 
