@@ -83,10 +83,6 @@ export default class LoginScreen extends Component {
     );
   }
 
-  // componentDidMount() {}
-
-  // componentWillUnmount() {}
-
   onLoginPress() {
     fetchReq
       .generalFetch(URL, fetchReq.makeOptions("POST", this.state))
@@ -125,8 +121,6 @@ export default class LoginScreen extends Component {
           `https://graph.facebook.com/me?access_token=${token}`
         );
         Alert.alert("Logged in!", `Hi ${(await response.json()).name}!`);
-        let test = await response.json();
-        console.log(test);
       } else {
         // type === 'cancel'
       }
@@ -134,19 +128,4 @@ export default class LoginScreen extends Component {
       alert(`Facebook Login Error: ${message}`);
     }
   }
-
-  // async onFbLoginPress() {
-  //   const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
-  //     appId,
-  //     {
-  //       permissions: ["public_profile", "email"],
-  //     }
-  //   );
-  //   if (type === "success") {
-  //     const response = await fetch(
-  //       `https://graph.facebook.com/me?access_token=${token}`
-  //     );
-  //     Alert.alert("Logged in!", `Hi ${(await response.json()).name}!`);
-  //   }
-  // }
 }

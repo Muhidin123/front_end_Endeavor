@@ -21,8 +21,8 @@ export default function Map({ navigation }) {
         showsMyLocationButton={true}
         zoomEnabled={true}
         initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
+          latitude: 41.98028,
+          longitude: -87.9089979,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}

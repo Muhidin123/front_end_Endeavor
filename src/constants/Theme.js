@@ -18,7 +18,7 @@ const COLORS = {
   BUTTON_COLOR: '#9C26B0',
   PLACEHOLDER: '#9FA5AA',
   THUMB_SWITCH_ON: '#f96332',
-  THUMB_SWITCH_ON: '#fff',
+  THUMB_SWITCH_OFF: '#fff',
   SWITCH_ON: '#f96332',
   SWITCH_OFF: '#898989',
   GRADIENT_START: '#6B24AA',
@@ -42,16 +42,16 @@ const COLORS = {
   GITHUB: '#333333',
   BEHANCE: '#1769ff',
   REDDIT: '#ff4500',
-  GOOGLE: '#dd4b39'
+  GOOGLE: '#dd4b39',
 };
 
 const SIZES = {
   BASE: 16,
   FONT: 16,
-  OPACITY: 0.8
+  OPACITY: 0.8,
 };
 
 export default {
   COLORS,
-  SIZES
+  SIZES,
 };

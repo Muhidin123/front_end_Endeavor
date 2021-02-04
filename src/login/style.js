@@ -1,8 +1,11 @@
 const React = require("react-native");
+import { Dimensions } from "react-native";
+const { width, height } = Dimensions.get("screen");
 
 const { StyleSheet } = React;
 
 export default {
+
   containerView: {
     flex: 1,
   },
@@ -18,6 +21,11 @@ export default {
   },
   loginFormView: {
     flex: 1,
+  },
+  createButton: {
+    width: width * 0.5,
+    marginTop: 25,
+    marginBottom: 40,
   },
   loginFormTextInput: {
     height: 43,

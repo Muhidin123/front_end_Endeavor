@@ -1,19 +1,21 @@
-import React, { useContext } from 'react';
-import { StyleSheet, Dimensions, ScrollView, TabBarIOSItem } from 'react-native';
-import { Block, theme } from 'galio-framework';
-import { Card } from '../components';
-import { Context } from '../../../App';
-import MyTabs from './BottomTab';
-const { width } = Dimensions.get('screen');
+import React, { useContext } from "react";
+import { StyleSheet, Dimensions, ScrollView } from "react-native";
+import { Block, theme } from "galio-framework";
+import { Card } from "../individual_components";
+import { Context } from "../../App";
+const { width } = Dimensions.get("screen");
 
 function Home() {
   const item = useContext(Context);
   const renderArticles = () => {
     return (
       <>
-        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.articles}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.articles}
+        >
           <Block flex>
-            {item.map((trip) => {
+            {item.map(trip => {
               return <Card item={trip} horizontal />;
             })}
           </Block>

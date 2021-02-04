@@ -1,48 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   StyleSheet,
   ImageBackground,
   Dimensions,
-  StatusBar,
   TouchableWithoutFeedback,
   Keyboard,
-} from 'react-native';
-import { Block, Text, Button as GaButton, theme } from 'galio-framework';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import fetchCall from '../../../Fetch';
-import { Button, Icon, Input } from '../components';
-import { Images, nowTheme } from '../constants';
-import { log } from 'react-native-reanimated';
-
-const { width, height } = Dimensions.get('screen');
-const URL = 'http://localhost:3000/api/v1/users';
+} from "react-native";
+import { Block, Text, Button as GaButton, theme } from "galio-framework";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import fetchCall from "../../Fetch";
+import { Button, Icon, Input } from "../individual_components";
+import { Images, nowTheme } from "../constants";
+import { log } from "react-native-reanimated";
+const { width, height } = Dimensions.get("screen");
+const URL = "http://localhost:3000/api/v1/users";
 const fetchReq = new fetchCall();
 
 const DismissKeyboard = ({ children }) => (
-  <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>{children}</TouchableWithoutFeedback>
+  <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    {children}
+  </TouchableWithoutFeedback>
 );
 
 export default function Register({ navigation }) {
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     let body = { user: e };
-    fetchReq.generalFetch(URL, fetchReq.makeOptions('POST', body)).then((data) => {
-      if (!data.user.error) {
-        //RESET NAVIGATION SO USER CAN NOT GO BACK TO LOGIN OR SIGN UP
-        navigation.reset({
-          index: 0,
-          routes: [{ name: 'Welcome' }],
-        });
-      }
-      console.log(data.error);
-    });
+    fetchReq
+      .generalFetch(URL, fetchReq.makeOptions("POST", body))
+      .then(data => {
+        if (!data.user.error) {
+          //RESET NAVIGATION SO USER CAN NOT GO BACK TO LOGIN OR SIGN UP
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "Welcome" }],
+          });
+        }
+        console.log(data.error);
+      });
   };
   const initialState = {
-    username: '',
-    email: '',
-    password: '',
-    first_name: '',
-    last_name: '',
-    bio: '',
+    username: "",
+    email: "",
+    password: "",
+    first_name: "",
+    last_name: "",
+    bio: "",
   };
   const [form, setForm] = useState(initialState);
   return (
@@ -56,28 +58,34 @@ export default function Register({ navigation }) {
           >
             <Block flex middle>
               <Block style={styles.registerContainer}>
-                <Block flex space="evenly">
+                <Block flex space='evenly'>
                   <Block flex={0.4} middle style={styles.socialConnect}>
                     <Block flex={0.5} middle>
                       <Text
                         style={{
-                          fontFamily: 'montserrat-regular',
-                          textAlign: 'center',
+                          fontFamily: "montserrat-regular",
+                          textAlign: "center",
                         }}
-                        color="#333"
+                        color='#333'
                         size={24}
                       >
                         Register
                       </Text>
                     </Block>
 
-                    <Block flex={0.5} row middle space="between" style={{ marginBottom: 18 }}>
+                    <Block
+                      flex={0.5}
+                      row
+                      middle
+                      space='between'
+                      style={{ marginBottom: 18 }}
+                    >
                       <GaButton
                         round
                         onlyIcon
                         shadowless
-                        icon="twitter"
-                        iconFamily="Font-Awesome"
+                        icon='twitter'
+                        iconFamily='Font-Awesome'
                         iconColor={theme.COLORS.WHITE}
                         iconSize={theme.SIZES.BASE * 1.625}
                         color={nowTheme.COLORS.TWITTER}
@@ -87,8 +95,8 @@ export default function Register({ navigation }) {
                         round
                         onlyIcon
                         shadowless
-                        icon="facebook"
-                        iconFamily="Font-Awesome"
+                        icon='facebook'
+                        iconFamily='Font-Awesome'
                         iconColor={theme.COLORS.WHITE}
                         iconSize={theme.SIZES.BASE * 1.625}
                         color={nowTheme.COLORS.FACEBOOK}
@@ -99,8 +107,8 @@ export default function Register({ navigation }) {
                   <Block flex={0.1} middle>
                     <Text
                       style={{
-                        fontFamily: 'montserrat-regular',
-                        textAlign: 'center',
+                        fontFamily: "montserrat-regular",
+                        textAlign: "center",
                       }}
                       muted
                       size={16}
@@ -108,70 +116,90 @@ export default function Register({ navigation }) {
                       or be classical
                     </Text>
                   </Block>
-                  <Block flex={1} middle space="between">
+                  <Block flex={1} middle space='between'>
                     <Block center flex={0.9}>
-                      <Block flex space="between">
+                      <Block flex space='between'>
                         <Block>
-                          <Block width={width * 0.8} style={{ marginBottom: 5 }}>
+                          <Block
+                            width={width * 0.8}
+                            style={{ marginBottom: 5 }}
+                          >
                             <Input
-                              placeholder="First Name"
+                              placeholder='First Name'
                               style={styles.inputs}
-                              onChangeText={(text) => setForm({ ...form, first_name: text })}
+                              onChangeText={text =>
+                                setForm({ ...form, first_name: text })
+                              }
                               iconContent={
                                 <Icon
                                   size={16}
-                                  color="#ADB5BD"
-                                  name="profile-circle"
-                                  family="NowExtra"
+                                  color='#ADB5BD'
+                                  name='profile-circle'
+                                  family='NowExtra'
                                   style={styles.inputIcons}
                                 />
                               }
                             />
                           </Block>
-                          <Block width={width * 0.8} style={{ marginBottom: 5 }}>
+                          <Block
+                            width={width * 0.8}
+                            style={{ marginBottom: 5 }}
+                          >
                             <Input
-                              placeholder="Last Name"
+                              placeholder='Last Name'
                               style={styles.inputs}
-                              onChangeText={(text) => setForm({ ...form, last_name: text })}
+                              onChangeText={text =>
+                                setForm({ ...form, last_name: text })
+                              }
                               iconContent={
                                 <Icon
                                   size={16}
-                                  color="#ADB5BD"
-                                  name="caps-small2x"
-                                  family="NowExtra"
+                                  color='#ADB5BD'
+                                  name='caps-small2x'
+                                  family='NowExtra'
                                   style={styles.inputIcons}
                                 />
                               }
                             />
                           </Block>
-                          <Block width={width * 0.8} style={{ marginBottom: 5 }}>
+                          <Block
+                            width={width * 0.8}
+                            style={{ marginBottom: 5 }}
+                          >
                             <Input
-                              onChangeText={(text) => setForm({ ...form, password: text })}
-                              placeholder="Password"
+                              onChangeText={text =>
+                                setForm({ ...form, password: text })
+                              }
+                              placeholder='Password'
                               style={styles.inputs}
                               secureTextEntry={true}
                               iconContent={
                                 <Icon
                                   size={16}
-                                  color="#ADB5BD"
-                                  name="caps-small2x"
-                                  family="NowExtra"
+                                  color='#ADB5BD'
+                                  name='caps-small2x'
+                                  family='NowExtra'
                                   style={styles.inputIcons}
                                 />
                               }
                             />
                           </Block>
-                          <Block width={width * 0.8} style={{ marginBottom: 5 }}>
+                          <Block
+                            width={width * 0.8}
+                            style={{ marginBottom: 5 }}
+                          >
                             <Input
-                              onChangeText={(text) => setForm({ ...form, username: text })}
-                              placeholder="Username"
+                              onChangeText={text =>
+                                setForm({ ...form, username: text })
+                              }
+                              placeholder='Username'
                               style={styles.inputs}
                               iconContent={
                                 <Icon
                                   size={16}
-                                  color="#ADB5BD"
-                                  name="caps-small2x"
-                                  family="NowExtra"
+                                  color='#ADB5BD'
+                                  name='caps-small2x'
+                                  family='NowExtra'
                                   style={styles.inputIcons}
                                 />
                               }
@@ -179,34 +207,41 @@ export default function Register({ navigation }) {
                           </Block>
                           <Block width={width * 0.8}>
                             <Input
-                              textContentType={'emailAddress'}
-                              onChangeText={(text) => setForm({ ...form, email: text })}
-                              placeholder="Email"
+                              textContentType={"emailAddress"}
+                              onChangeText={text =>
+                                setForm({ ...form, email: text })
+                              }
+                              placeholder='Email'
                               style={styles.inputs}
                               iconContent={
                                 <Icon
                                   size={16}
-                                  color="#ADB5BD"
-                                  name="email-852x"
-                                  family="NowExtra"
+                                  color='#ADB5BD'
+                                  name='email-852x'
+                                  family='NowExtra'
                                   style={styles.inputIcons}
                                 />
                               }
                             />
                           </Block>
-                          <Block width={width * 0.8} style={{ marginBottom: 5 }}>
+                          <Block
+                            width={width * 0.8}
+                            style={{ marginBottom: 5 }}
+                          >
                             <Input
                               multiline={true}
-                              textAlignVertical="top"
-                              onChangeText={(text) => setForm({ ...form, bio: text })}
-                              placeholder="Bio"
+                              textAlignVertical='top'
+                              onChangeText={text =>
+                                setForm({ ...form, bio: text })
+                              }
+                              placeholder='Bio'
                               style={styles.inputs}
                               iconContent={
                                 <Icon
                                   size={16}
-                                  color="#ADB5BD"
-                                  name="caps-small2x"
-                                  family="NowExtra"
+                                  color='#ADB5BD'
+                                  name='caps-small2x'
+                                  family='NowExtra'
                                   style={styles.inputIcons}
                                 />
                               }
@@ -215,7 +250,7 @@ export default function Register({ navigation }) {
                         </Block>
                         <Block center>
                           <Button
-                            color="INFO"
+                            color='INFO'
                             round
                             style={styles.createButton}
                             onPress={() => handleSubmit(form)}
@@ -263,7 +298,7 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     shadowOpacity: 0.1,
     elevation: 1,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   socialConnect: {
     backgroundColor: nowTheme.COLORS.WHITE,
@@ -273,7 +308,7 @@ const styles = StyleSheet.create({
   socialButtons: {
     width: 120,
     height: 40,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     shadowColor: nowTheme.COLORS.BLACK,
     shadowOffset: {
       width: 0,
@@ -285,7 +320,7 @@ const styles = StyleSheet.create({
   },
   socialTextButtons: {
     color: nowTheme.COLORS.PRIMARY,
-    fontWeight: '800',
+    fontWeight: "800",
     fontSize: 14,
   },
   inputIcons: {
@@ -294,7 +329,7 @@ const styles = StyleSheet.create({
   },
   inputs: {
     borderWidth: 1,
-    borderColor: '#E3E3E3',
+    borderColor: "#E3E3E3",
     borderRadius: 21.5,
   },
   passwordCheck: {
@@ -311,7 +346,7 @@ const styles = StyleSheet.create({
     width: theme.SIZES.BASE * 3.5,
     height: theme.SIZES.BASE * 3.5,
     borderRadius: theme.SIZES.BASE * 1.75,
-    justifyContent: 'center',
+    justifyContent: "center",
     marginHorizontal: 10,
   },
 });

@@ -1,16 +1,15 @@
 import "react-native-gesture-handler";
 import React, { createContext, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
-import LoginScreen from "./src/login/login.js";
+import LoginScreen from "./src/login/Login.js";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-import Map from "./src/map/map.js";
-import Register from "./src/now-ui-react-native-master/screens/Register.js";
-import Home from "./src/now-ui-react-native-master/screens/Home.js";
 import fetchCall from "./Fetch";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import MyTabs from "./src/now-ui-react-native-master/screens/BottomTab.js";
+import MyTabs from "./src/screens/BottomTab.js";
+import Register from "./src/screens/Register.js";
+import Form from "./src/form/Form.js";
+
 const Tab = createMaterialBottomTabNavigator();
 
 const Stack = createStackNavigator();
@@ -35,27 +34,8 @@ function App() {
   return (
     <Context.Provider value={allTrips}>
       <NavigationContainer initialRouteName='Login'>
-        {/* <Tab.Navigator>
-          <Tab.Screen name='Login' component={LoginScreen} />
-          <Tab.Screen name='Home' component={Home} />
-        </Tab.Navigator> */}
         <Stack.Navigator>
-          {/* <Stack.Screen name='Login' component={LoginScreen} />
-          <Stack.Screen name='Home' component={Home} />
-          <Stack.Screen name='Welcome' component={Map} />
-          <Stack.Screen name='Search' component={Profile} />
-          <Stack.Screen name='SignUp' component={Register} /> */}
-          {/* <Tab.Screen
-            name='Home'
-            component={Home}
-            options={{
-              tabBarLabel: "Home",
-              tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons name='home' color={color} size={26} />
-              ),
-            }}
-          /> */}
-          <Stack.Screen name='Login' component={LoginScreen} />
+          <Stack.Screen name='Login' component={Form} />
           <Stack.Screen name='Home' component={MyTabs} />
           <Stack.Screen name='SignUp' component={Register} />
         </Stack.Navigator>
@@ -63,5 +43,5 @@ function App() {
     </Context.Provider>
   );
 }
-export default App;
 const styles = StyleSheet.create({});
+export default App;

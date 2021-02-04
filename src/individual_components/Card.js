@@ -1,10 +1,10 @@
-import React from 'react';
-import { withNavigation } from '@react-navigation/compat';
-import PropTypes from 'prop-types';
-import { StyleSheet, Image, TouchableWithoutFeedback } from 'react-native';
-import { Block, Text, theme } from 'galio-framework';
+import React from "react";
+import { withNavigation } from "@react-navigation/compat";
+import PropTypes from "prop-types";
+import { StyleSheet, Image, TouchableWithoutFeedback } from "react-native";
+import { Block, Text, theme } from "galio-framework";
 
-import { nowTheme } from '../constants';
+import { nowTheme } from "../constants";
 
 function Card(props) {
   const {
@@ -19,7 +19,10 @@ function Card(props) {
     titleStyle,
   } = props;
 
-  const imageStyles = [full ? styles.fullImage : styles.horizontalImage, imageStyle];
+  const imageStyles = [
+    full ? styles.fullImage : styles.horizontalImage,
+    imageStyle,
+  ];
   const titleStyles = [styles.cardTitle, titleStyle];
   const cardContainer = [styles.card, styles.shadow, style];
   const imgContainer = [
@@ -29,20 +32,20 @@ function Card(props) {
   ];
   return (
     <Block row={horizontal} card flex style={cardContainer}>
-      <TouchableWithoutFeedback onPress={() => navigation.navigate('Search')}>
+      <TouchableWithoutFeedback onPress={() => navigation.navigate("Search")}>
         <Block flex style={imgContainer}>
           <Image
-            resizeMode="cover"
-            source={require('../assets/imgs/project13.jpg')}
+            resizeMode='cover'
+            source={require("../../assets/imgs/project13.jpg")}
             style={imageStyles}
           />
         </Block>
       </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback onPress={() => navigation.navigate('Search')}>
-        <Block flex space="between" style={styles.cardDescription}>
+      <TouchableWithoutFeedback onPress={() => navigation.navigate("Search")}>
+        <Block flex space='between' style={styles.cardDescription}>
           <Block flex>
             <Text
-              style={{ fontFamily: 'montserrat-regular' }}
+              style={{ fontFamily: "montserrat-regular" }}
               size={14}
               style={titleStyles}
               color={nowTheme.COLORS.SECONDARY}
@@ -53,7 +56,7 @@ function Card(props) {
             {item.subtitle ? (
               <Block flex center>
                 <Text
-                  style={{ fontFamily: 'montserrat-regular' }}
+                  style={{ fontFamily: "montserrat-regular" }}
                   size={32}
                   color={nowTheme.COLORS.BLACK}
                 >
@@ -66,9 +69,13 @@ function Card(props) {
             {item.description ? (
               <Block flex center>
                 <Text
-                  style={{ fontFamily: 'montserrat-regular', textAlign: 'center', padding: 15 }}
+                  style={{
+                    fontFamily: "montserrat-regular",
+                    textAlign: "center",
+                    padding: 15,
+                  }}
                   size={14}
-                  color={'#9A9A9A'}
+                  color={"#9A9A9A"}
                 >
                   {item.description}
                 </Text>
@@ -97,7 +104,7 @@ function Card(props) {
               bold
             >
               {/* NAME OF LOCATION AND MARKER */}
-              {item['destination_name']}
+              {item["destination_name"]}
             </Text>
           </Block>
         </Block>
@@ -136,14 +143,14 @@ const styles = StyleSheet.create({
   imageContainer: {
     borderRadius: 3,
     elevation: 1,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   image: {
     // borderRadius: 3,
   },
   horizontalImage: {
     height: 122,
-    width: 'auto',
+    width: "auto",
   },
   horizontalStyles: {
     borderTopRightRadius: 0,
@@ -157,14 +164,14 @@ const styles = StyleSheet.create({
     height: 215,
   },
   shadow: {
-    shadowColor: '#8898AA',
+    shadowColor: "#8898AA",
     shadowOffset: { width: 0, height: 1 },
     shadowRadius: 6,
     shadowOpacity: 0.1,
     elevation: 2,
   },
   articleButton: {
-    fontFamily: 'montserrat-bold',
+    fontFamily: "montserrat-bold",
     paddingHorizontal: 9,
     paddingVertical: 7,
   },

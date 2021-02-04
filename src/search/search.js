@@ -1,14 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import { View, StyleSheet } from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import Constants from "expo-constants";
-import { Text } from "galio-framework";
-import { Context } from "../../App";
 
 export default function GoogleSearch(props) {
-  const something = useContext(Context);
-  console.log(something, "----------SEARCH----------");
-
   return (
     <View style={styles.container}>
       <GooglePlacesAutocomplete
@@ -16,7 +11,7 @@ export default function GoogleSearch(props) {
         fetchDetails={true}
         onPress={(data, details = null) => {
           console.log(details.geometry.location);
-          console.log(details);
+          console.log(data);
         }}
         enablePoweredByContainer={true}
         query={{
@@ -24,7 +19,6 @@ export default function GoogleSearch(props) {
           language: "en",
         }}
       />
-      <Text>{something[0]["title"]}</Text>
     </View>
   );
 }
