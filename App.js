@@ -57,6 +57,7 @@ function App() {
           /> */}
           <Stack.Screen name='Login' component={LoginScreen} />
           <Stack.Screen name='Home' component={MyTabs} />
+          <Stack.Screen name='SignUp' component={Register} />
         </Stack.Navigator>
       </NavigationContainer>
     </Context.Provider>

@@ -12,13 +12,13 @@ import {
 } from "react-native";
 import { Button } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import ArButton from "../now-ui-react-native-master/components/Button";
 const URL = "http://localhost:3000/api/v1/login";
 const URL_ON_REFRESH = "http://localhost:3000/api/v1/profile";
+import * as Facebook from "expo-facebook";
 
 let fetchReq = new fetchCall();
 
-const appId = "1047121222092614";
+const appId = "460873211757502";
 
 export default class LoginScreen extends Component {
   constructor(props) {
@@ -96,6 +96,7 @@ export default class LoginScreen extends Component {
           this.textInputPassword.clear();
           this.textInputUsername.clear();
           this.props.navigation.reset({
+            //RESET NAVIGATION SO USER CAN NOT GO BACK TO LOGIN OR SIGN UP
             index: 0,
             routes: [{ name: "Home" }],
           });
@@ -105,17 +106,47 @@ export default class LoginScreen extends Component {
   }
 
   async onFbLoginPress() {
-    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
-      appId,
-      {
-        permissions: ["public_profile", "email"],
+    try {
+      await Facebook.initializeAsync({
+        appId: appId,
+      });
+      const {
+        type,
+        token,
+        expirationDate,
+        permissions,
+        declinedPermissions,
+      } = await Facebook.logInWithReadPermissionsAsync({
+        permissions: ["public_profile"],
+      });
+      if (type === "success") {
+        // Get the user's name using Facebook's Graph API
+        const response = await fetch(
+          `https://graph.facebook.com/me?access_token=${token}`
+        );
+        Alert.alert("Logged in!", `Hi ${(await response.json()).name}!`);
+        let test = await response.json();
+        console.log(test);
+      } else {
+        // type === 'cancel'
       }
-    );
-    if (type === "success") {
-      const response = await fetch(
-        `https://graph.facebook.com/me?access_token=${token}`
-      );
-      Alert.alert("Logged in!", `Hi ${(await response.json()).name}!`);
+    } catch ({ message }) {
+      alert(`Facebook Login Error: ${message}`);
     }
   }
+
+  // async onFbLoginPress() {
+  //   const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
+  //     appId,
+  //     {
+  //       permissions: ["public_profile", "email"],
+  //     }
+  //   );
+  //   if (type === "success") {
+  //     const response = await fetch(
+  //       `https://graph.facebook.com/me?access_token=${token}`
+  //     );
+  //     Alert.alert("Logged in!", `Hi ${(await response.json()).name}!`);
+  //   }
+  // }
 }

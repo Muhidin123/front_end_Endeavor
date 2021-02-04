@@ -4,17 +4,18 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import LoginScreen from '../../login/login';
 import Map from '../../map/map';
 import Home from './Home';
+import GoogleSearch from '../../search/search';
 
 const Tab = createMaterialBottomTabNavigator();
 
 export default function MyTabs() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator labeled={false}>
       <Tab.Screen
         name="Home"
         component={Home}
         options={{
-          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="bell" color={color} size={26} />,
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="home" color={color} size={30} />,
         }}
       />
       <Tab.Screen
@@ -22,7 +23,16 @@ export default function MyTabs() {
         component={Map}
         options={{
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="account" color={color} size={26} />
+            <MaterialCommunityIcons name="google-maps" color={color} size={30} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Search"
+        component={GoogleSearch}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="magnify" color={color} size={30} />
           ),
         }}
       />

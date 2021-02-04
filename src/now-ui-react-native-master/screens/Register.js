@@ -27,11 +27,11 @@ export default function Register({ navigation }) {
     let body = { user: e };
     fetchReq.generalFetch(URL, fetchReq.makeOptions('POST', body)).then((data) => {
       if (!data.user.error) {
-        navigation.push('Welcome');
-        // navigation.reset({           RESET NAVIGATION SO USER CAN NOT GO BACK
-        //   index: 0,
-        //   routes: [{ name: 'Welcome' }],
-        // });
+        //RESET NAVIGATION SO USER CAN NOT GO BACK TO LOGIN OR SIGN UP
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Welcome' }],
+        });
       }
       console.log(data.error);
     });
