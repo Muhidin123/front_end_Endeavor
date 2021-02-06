@@ -1,50 +1,32 @@
 import * as React from "react";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+
 import { Marker } from "react-native-maps";
 import { StyleSheet, View, Dimensions, Text, Button } from "react-native";
-import { useState } from "react";
 
-export default function Map({ navigation }) {
-  const [longitude, setLongitude] = useState(0);
-  const [latitude, setLatitude] = useState(0);
-  const handlePress = e => {
-    console.log(e);
-    setLongitude(e.longitude);
-    setLatitude(e.latitude);
-  };
+export default function Map({ coordinates, navigation }) {
   return (
     <View style={styles.container}>
       <MapView
         provider={PROVIDER_GOOGLE}
+        showsMyLocationButton={true}
         style={styles.map}
         showsUserLocation={true}
-        showsMyLocationButton={true}
         zoomEnabled={true}
         initialRegion={{
-          latitude: 41.98028,
-          longitude: -87.9089979,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-        onPress={e => {
-          handlePress(e.nativeEvent.coordinate);
+          latitude: 1,
+          longitude: 1,
+          latitudeDelta: 0.0043,
+          longitudeDelta: 0.0034,
         }}
       >
         <Marker
           coordinate={{
-            longitude,
-            latitude,
+            longitude: coordinates.longitude,
+            latitude: coordinates.latitude,
           }}
         />
       </MapView>
-      <View>
-        <Button
-          onPress={() => {
-            navigation.push("Home");
-          }}
-          title='Search'
-        ></Button>
-      </View>
     </View>
   );
 }
@@ -58,7 +40,7 @@ const styles = StyleSheet.create({
   },
   map: {
     width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height / 2,
+    height: Dimensions.get("window").height / 2.5,
     position: "relative",
   },
 });

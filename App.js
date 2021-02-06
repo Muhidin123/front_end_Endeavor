@@ -8,7 +8,6 @@ import fetchCall from "./Fetch";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import MyTabs from "./src/screens/BottomTab.js";
 import Register from "./src/screens/Register.js";
-import Form from "./src/form/Form.js";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -35,7 +34,7 @@ function App() {
     <Context.Provider value={allTrips}>
       <NavigationContainer initialRouteName='Login'>
         <Stack.Navigator>
-          <Stack.Screen name='Login' component={Form} />
+          <Stack.Screen name='Login' component={LoginScreen} />
           <Stack.Screen name='Home' component={MyTabs} />
           <Stack.Screen name='SignUp' component={Register} />
         </Stack.Navigator>

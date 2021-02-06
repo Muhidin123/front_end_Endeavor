@@ -5,54 +5,97 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import GoogleSearch from "../search/search"
 import { Block, Text } from "galio-framework";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import fetchCall from "../../Fetch";
 import { Button as ButtonSubmit, Icon, Input } from "../individual_components";
 import { nowTheme } from "../constants/index";
-import Map from "../map/Map";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { View } from "react-native";
+import GooglePlacesInput from "../search/Search";
 const { width, height } = Dimensions.get("screen");
+import Map from "../map/Map";
+import fetchCall from "../../Fetch";
+let fetchReq = new fetchCall();
+const URL_POST_REQ_TRIP = "http://localhost:3000/api/v1/trips";
 
 const DismissKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     {children}
   </TouchableWithoutFeedback>
 );
-const date = new Date();
 
 export default function Form({ navigation }) {
   const handleSubmit = e => {
-    console.log(e);
+    fetchReq
+      .generalFetch(
+        URL_POST_REQ_TRIP,
+        fetchReq.makeOptions("POST", { trip: e })
+      )
+      .then(data => {
+        console.log(data);
+        navigation.push("Home");
+      });
   };
 
   const initialState = {
     title: "",
-    start: "",
-    end: "",
+    start: null,
+    end: null,
     destination_name: "",
-    latitude: "",
-    longitude: "",
+    latitude: 0,
+    longitude: 0,
+    user_id: 1,
+    public: true,
   };
 
   const [form, setForm] = useState(initialState);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+
+  const handleDestination = (e, name) => {
+    setForm({
+      ...form,
+      latitude: e.lat,
+      longitude: e.lng,
+      destination_name: name,
+    });
+  };
+
+  const setStart = (_event, date) => {
+    setForm({
+      ...form,
+      start: date.toISOString(),
+    });
+    setStartDate(date);
+  };
+  const setEnd = (_event, date) => {
+    setForm({
+      ...form,
+      end: date.toISOString(),
+    });
+    setEndDate(date);
+  };
   return (
-    <KeyboardAwareScrollView>
-      <DismissKeyboard>
-        <Block flex middle>
-          <Block flex middle>
-            <Block flex={0.4} middle style={styles.socialConnect}>
-              <Block flex={0.5} middle>
+    <KeyboardAwareScrollView keyboardShouldPersistTaps={"handled"}>
+      <DismissKeyboard keyboardShouldPersistTaps={"handled"}>
+        <Block flex middle keyboardShouldPersistTaps={"handled"}>
+          <Block flex middle keyboardShouldPersistTaps={"handled"}>
+            <Block
+              flex={0.4}
+              middle
+              style={styles.socialConnect}
+              keyboardShouldPersistTaps={"handled"}
+            >
+              <Block flex={0.5} middle keyboardShouldPersistTaps={"handled"}>
                 {/* ADD TEXT TO HEADER FORM HERE */}
               </Block>
-
               <Block
                 flex={0.5}
                 row
                 middle
                 space='between'
                 style={{ marginBottom: 18 }}
+                keyboardShouldPersistTaps={"handled"}
               ></Block>
             </Block>
             <Block flex={0.1} middle></Block>
@@ -64,9 +107,7 @@ export default function Form({ navigation }) {
                       <Input
                         placeholder='Title'
                         style={styles.inputs}
-                        onChangeText={text =>
-                          setForm({ ...form, first_name: text })
-                        }
+                        onChangeText={text => setForm({ ...form, title: text })}
                         iconContent={
                           <Icon
                             size={16}
@@ -82,9 +123,7 @@ export default function Form({ navigation }) {
                       <Input
                         placeholder='Note'
                         style={styles.inputs}
-                        onChangeText={text =>
-                          setForm({ ...form, last_name: text })
-                        }
+                        onChangeText={text => setForm({ ...form, note: text })}
                         iconContent={
                           <Icon
                             size={16}
@@ -97,68 +136,41 @@ export default function Form({ navigation }) {
                       />
                     </Block>
                     <Block width={width * 0.8} style={{ marginBottom: 5 }}>
-                      {/* <Input
-                        onChangeText={text =>
-                          setForm({ ...form, password: text })
-                        }
-                        placeholder='Destination name'
-                        style={styles.inputs}
-                        iconContent={
-                          <Icon
-                            size={16}
-                            color='#ADB5BD'
-                            name='caps-small2x'
-                            family='NowExtra'
-                            style={styles.inputIcons}
-                          />
-                        }
-                      /> */}
-                      <GoogleSearch />
+                      <GooglePlacesInput
+                        handleDestination={handleDestination}
+                      />
                     </Block>
-                    <Block
+                    <View
                       width={width * 0.8}
                       style={{ marginBottom: 5 }}
-                    ></Block>
+                    ></View>
                     <Block width={width * 0.8}>
                       <Text>Start date</Text>
                       <DateTimePicker
                         testID='dateTimePicker'
-                        value={date}
+                        value={startDate}
                         mode='date'
                         is24Hour={true}
                         display='default'
                         style={styles.dateButton}
+                        onChange={
+                          setStart
+                          // (_event, date) =>
+                          // setForm({ ...form, start: date.toISOString() })
+                        }
                       />
                     </Block>
                     <Block width={width * 0.8} style={{ marginBottom: 5 }}>
                       <Text>End date</Text>
                       <DateTimePicker
+                        onChange={setEnd}
                         testID='dateTimePicker'
-                        value={date}
+                        value={endDate}
                         mode='date'
-                        is24Hour={true}
                         display='default'
                         style={styles.dateButton}
                       />
                     </Block>
-                    {/* <Block width={width * 0.8} style={{ marginBottom: 5 }}>
-                      <Input
-                        multiline={true}
-                        textAlignVertical='top'
-                        onChangeText={text => setForm({ ...form, bio: text })}
-                        placeholder='Bio'
-                        style={styles.inputs}
-                        iconContent={
-                          <Icon
-                            size={16}
-                            color='#ADB5BD'
-                            name='caps-small2x'
-                            family='NowExtra'
-                            style={styles.inputIcons}
-                          />
-                        }
-                      />
-                    </Block> */}
                   </Block>
                   <Block center>
                     <ButtonSubmit
@@ -178,6 +190,9 @@ export default function Form({ navigation }) {
           </Block>
         </Block>
       </DismissKeyboard>
+      <Map
+        coordinates={{ longitude: form.longitude, latitude: form.latitude }}
+      />
     </KeyboardAwareScrollView>
   );
 }

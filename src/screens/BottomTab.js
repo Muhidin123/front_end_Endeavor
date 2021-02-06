@@ -3,7 +3,8 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Map from "../map/Map";
 import Home from "./Home";
-import GoogleSearch from "../search/search";
+import GoogleSearch from "../search/Search";
+import Form from "../form/Form";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -19,7 +20,7 @@ export default function MyTabs() {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name='Map'
         component={Map}
         options={{
@@ -31,13 +32,13 @@ export default function MyTabs() {
             />
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name='Search'
-        component={GoogleSearch}
+        component={Form}
         options={{
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name='magnify' color={color} size={30} />
+            <MaterialCommunityIcons name='plus' color={color} size={30} />
           ),
         }}
       />
