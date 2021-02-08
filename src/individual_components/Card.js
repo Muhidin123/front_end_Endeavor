@@ -3,7 +3,14 @@ import { withNavigation } from "@react-navigation/compat";
 import PropTypes from "prop-types";
 import { StyleSheet, Image, TouchableWithoutFeedback } from "react-native";
 import { Block, Text, theme } from "galio-framework";
+import * as Font from "expo-font";
 
+let customFonts = {
+  "montserrat-regular": require("../../assets/font/Montserrat-Regular.ttf"),
+  "montserrat-bold": require("../../assets/font/Montserrat-Bold.ttf"),
+};
+
+Font.loadAsync(customFonts);
 import { nowTheme } from "../constants";
 
 function Card(props) {
@@ -31,85 +38,97 @@ function Card(props) {
     styles.shadow,
   ];
   return (
-    <Block row={horizontal} card flex style={cardContainer}>
-      <TouchableWithoutFeedback onPress={() => navigation.navigate("Search")}>
-        <Block flex style={imgContainer}>
-          <Image
-            resizeMode='cover'
-            source={require("../../assets/imgs/project13.jpg")}
-            style={imageStyles}
-          />
-        </Block>
-      </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback onPress={() => navigation.navigate("Search")}>
-        <Block flex space='between' style={styles.cardDescription}>
-          <Block flex>
-            <Text
-              style={{ fontFamily: "montserrat-regular" }}
-              size={14}
-              style={titleStyles}
-              color={nowTheme.COLORS.SECONDARY}
-            >
-              {item.title}
-            </Text>
-            {/* {CHECK FOR ITEN SUBTITLE TO DISPLAY ON THE CARD} */}
-            {item.subtitle ? (
-              <Block flex center>
-                <Text
-                  style={{ fontFamily: "montserrat-regular" }}
-                  size={32}
-                  color={nowTheme.COLORS.BLACK}
-                >
-                  {item.id}
-                </Text>
-              </Block>
-            ) : (
-              <Block />
-            )}
-            {item.description ? (
-              <Block flex center>
-                <Text
-                  style={{
-                    fontFamily: "montserrat-regular",
-                    textAlign: "center",
-                    padding: 15,
-                  }}
-                  size={14}
-                  color={"#9A9A9A"}
-                >
-                  {item.description}
-                </Text>
-              </Block>
-            ) : (
-              <Block />
-            )}
-            {/* {BODY OF THE CARD JUST UNDER THE DESCRIPTION} */}
-            {item.note ? (
-              <Block flex left>
-                <Text size={12} color={nowTheme.COLORS.TEXT}>
-                  {item.note}
-                </Text>
-              </Block>
-            ) : (
-              <Block />
-            )}
+    <>
+      <Block row={horizontal} card flex style={cardContainer}>
+        <TouchableWithoutFeedback
+          onPress={() => navigation.navigate("SingleTripCard", { trip: item })}
+        >
+          <Block flex style={imgContainer}>
+            <Image
+              resizeMode='cover'
+              source={
+                item.image
+                  ? {
+                      uri: item.image,
+                    }
+                  : require("../../assets/imgs/picture-not-available.jpg")
+              }
+              style={imageStyles}
+            />
           </Block>
-          {/* ADD A LOCATION NAME AND MARKER INSTEAD OF THE VIEW ARTICLE/CHANGE THE NAME OF VIEW ARTICLE  */}
-          <Block right={true}>
-            <Text
-              style={styles.articleButton}
-              size={12}
-              muted={!ctaColor}
-              color={ctaColor || nowTheme.COLORS.ACTIVE}
-              bold
-            >
-              {/* NAME OF LOCATION AND MARKER */}
-              {item["destination_name"]}
-            </Text>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+          onPress={() => console.log("Pressed title or something in there")}
+        >
+          <Block flex space='between' style={styles.cardDescription}>
+            <Block flex>
+              <Text
+                style={{ fontFamily: "montserrat-regular" }}
+                size={14}
+                style={titleStyles}
+                color={nowTheme.COLORS.SECONDARY}
+              >
+                {item.title}
+              </Text>
+              {/* {CHECK FOR ITEN SUBTITLE TO DISPLAY ON THE CARD} */}
+              {item.subtitle ? (
+                <Block flex center>
+                  <Text
+                    style={{ fontFamily: "montserrat-regular" }}
+                    size={32}
+                    color={nowTheme.COLORS.BLACK}
+                  >
+                    {item.id}
+                  </Text>
+                </Block>
+              ) : (
+                <Block />
+              )}
+              {item.description ? (
+                <Block flex center>
+                  <Text
+                    style={{
+                      fontFamily: "montserrat-regular",
+                      textAlign: "center",
+                      padding: 15,
+                    }}
+                    size={14}
+                    color={"#9A9A9A"}
+                  >
+                    {item.description}
+                  </Text>
+                </Block>
+              ) : (
+                <Block />
+              )}
+              {/* {BODY OF THE CARD JUST UNDER THE DESCRIPTION} */}
+              {item.note ? (
+                <Block flex left>
+                  <Text size={12} color={nowTheme.COLORS.TEXT}>
+                    {item.note}
+                  </Text>
+                </Block>
+              ) : (
+                <Block />
+              )}
+            </Block>
+            {/* ADD A LOCATION NAME AND MARKER INSTEAD OF THE VIEW ARTICLE/CHANGE THE NAME OF VIEW ARTICLE  */}
+            <Block right={true}>
+              <Text
+                style={styles.articleButton}
+                size={12}
+                muted={!ctaColor}
+                color={ctaColor || nowTheme.COLORS.ACTIVE}
+                bold
+              >
+                {/* NAME OF LOCATION AND MARKER */}
+                {item["destination_name"]}
+              </Text>
+            </Block>
           </Block>
-        </Block>
-      </TouchableWithoutFeedback>
-    </Block>
+        </TouchableWithoutFeedback>
+      </Block>
+    </>
   );
 }
 
@@ -161,7 +180,8 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 0,
   },
   fullImage: {
-    height: 215,
+    height: 300,
+    width: "auto",
   },
   shadow: {
     shadowColor: "#8898AA",
@@ -176,7 +196,5 @@ const styles = StyleSheet.create({
     paddingVertical: 7,
   },
 });
-
-// Card.contextType = TestContext;
 
 export default withNavigation(Card);

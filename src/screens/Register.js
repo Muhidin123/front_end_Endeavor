@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   StyleSheet,
-  ImageBackground,
   Dimensions,
   TouchableWithoutFeedback,
   Keyboard,
@@ -10,7 +9,7 @@ import { Block, Text, Button as GaButton, theme } from "galio-framework";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import fetchCall from "../../Fetch";
 import { Button, Icon, Input } from "../individual_components";
-import { Images, nowTheme } from "../constants";
+import { nowTheme } from "../constants";
 import { log } from "react-native-reanimated";
 const { width, height } = Dimensions.get("screen");
 const URL = "http://localhost:3000/api/v1/users";
@@ -51,222 +50,187 @@ export default function Register({ navigation }) {
     <KeyboardAwareScrollView>
       <DismissKeyboard>
         <Block flex middle>
-          <ImageBackground
-            source={Images.RegisterBackground}
-            style={styles.imageBackgroundContainer}
-            imageStyle={styles.imageBackground}
-          >
-            <Block flex middle>
-              <Block style={styles.registerContainer}>
-                <Block flex space='evenly'>
-                  <Block flex={0.4} middle style={styles.socialConnect}>
-                    <Block flex={0.5} middle>
-                      <Text
-                        style={{
-                          fontFamily: "montserrat-regular",
-                          textAlign: "center",
-                        }}
-                        color='#333'
-                        size={24}
-                      >
-                        Register
-                      </Text>
-                    </Block>
-
-                    <Block
-                      flex={0.5}
-                      row
-                      middle
-                      space='between'
-                      style={{ marginBottom: 18 }}
-                    >
-                      <GaButton
-                        round
-                        onlyIcon
-                        shadowless
-                        icon='twitter'
-                        iconFamily='Font-Awesome'
-                        iconColor={theme.COLORS.WHITE}
-                        iconSize={theme.SIZES.BASE * 1.625}
-                        color={nowTheme.COLORS.TWITTER}
-                        style={[styles.social, styles.shadow]}
-                      />
-                      <GaButton
-                        round
-                        onlyIcon
-                        shadowless
-                        icon='facebook'
-                        iconFamily='Font-Awesome'
-                        iconColor={theme.COLORS.WHITE}
-                        iconSize={theme.SIZES.BASE * 1.625}
-                        color={nowTheme.COLORS.FACEBOOK}
-                        style={[styles.social, styles.shadow]}
-                      />
-                    </Block>
-                  </Block>
-                  <Block flex={0.1} middle>
+          <Block flex middle>
+            <Block style={styles.registerContainer}>
+              <Block flex space='evenly'>
+                <Block flex={0.4} middle style={styles.socialConnect}>
+                  <Block flex={0.5} middle>
                     <Text
                       style={{
-                        fontFamily: "montserrat-regular",
                         textAlign: "center",
                       }}
-                      muted
-                      size={16}
+                      color='#333'
+                      size={24}
                     >
-                      or be classical
+                      NOPE SCROLL DOWN TO REGISTER
                     </Text>
                   </Block>
-                  <Block flex={1} middle space='between'>
-                    <Block center flex={0.9}>
-                      <Block flex space='between'>
-                        <Block>
-                          <Block
-                            width={width * 0.8}
-                            style={{ marginBottom: 5 }}
-                          >
-                            <Input
-                              placeholder='First Name'
-                              style={styles.inputs}
-                              onChangeText={text =>
-                                setForm({ ...form, first_name: text })
-                              }
-                              iconContent={
-                                <Icon
-                                  size={16}
-                                  color='#ADB5BD'
-                                  name='profile-circle'
-                                  family='NowExtra'
-                                  style={styles.inputIcons}
-                                />
-                              }
-                            />
-                          </Block>
-                          <Block
-                            width={width * 0.8}
-                            style={{ marginBottom: 5 }}
-                          >
-                            <Input
-                              placeholder='Last Name'
-                              style={styles.inputs}
-                              onChangeText={text =>
-                                setForm({ ...form, last_name: text })
-                              }
-                              iconContent={
-                                <Icon
-                                  size={16}
-                                  color='#ADB5BD'
-                                  name='caps-small2x'
-                                  family='NowExtra'
-                                  style={styles.inputIcons}
-                                />
-                              }
-                            />
-                          </Block>
-                          <Block
-                            width={width * 0.8}
-                            style={{ marginBottom: 5 }}
-                          >
-                            <Input
-                              onChangeText={text =>
-                                setForm({ ...form, password: text })
-                              }
-                              placeholder='Password'
-                              style={styles.inputs}
-                              secureTextEntry={true}
-                              iconContent={
-                                <Icon
-                                  size={16}
-                                  color='#ADB5BD'
-                                  name='caps-small2x'
-                                  family='NowExtra'
-                                  style={styles.inputIcons}
-                                />
-                              }
-                            />
-                          </Block>
-                          <Block
-                            width={width * 0.8}
-                            style={{ marginBottom: 5 }}
-                          >
-                            <Input
-                              onChangeText={text =>
-                                setForm({ ...form, username: text })
-                              }
-                              placeholder='Username'
-                              style={styles.inputs}
-                              iconContent={
-                                <Icon
-                                  size={16}
-                                  color='#ADB5BD'
-                                  name='caps-small2x'
-                                  family='NowExtra'
-                                  style={styles.inputIcons}
-                                />
-                              }
-                            />
-                          </Block>
-                          <Block width={width * 0.8}>
-                            <Input
-                              textContentType={"emailAddress"}
-                              onChangeText={text =>
-                                setForm({ ...form, email: text })
-                              }
-                              placeholder='Email'
-                              style={styles.inputs}
-                              iconContent={
-                                <Icon
-                                  size={16}
-                                  color='#ADB5BD'
-                                  name='email-852x'
-                                  family='NowExtra'
-                                  style={styles.inputIcons}
-                                />
-                              }
-                            />
-                          </Block>
-                          <Block
-                            width={width * 0.8}
-                            style={{ marginBottom: 5 }}
-                          >
-                            <Input
-                              multiline={true}
-                              textAlignVertical='top'
-                              onChangeText={text =>
-                                setForm({ ...form, bio: text })
-                              }
-                              placeholder='Bio'
-                              style={styles.inputs}
-                              iconContent={
-                                <Icon
-                                  size={16}
-                                  color='#ADB5BD'
-                                  name='caps-small2x'
-                                  family='NowExtra'
-                                  style={styles.inputIcons}
-                                />
-                              }
-                            />
-                          </Block>
+
+                  <Block
+                    flex={0.5}
+                    row
+                    middle
+                    space='between'
+                    style={{ marginBottom: 18 }}
+                  >
+                    <GaButton
+                      round
+                      onlyIcon
+                      shadowless
+                      icon='facebook'
+                      iconFamily='Font-Awesome'
+                      iconColor={theme.COLORS.WHITE}
+                      iconSize={theme.SIZES.BASE * 1.625}
+                      color={nowTheme.COLORS.FACEBOOK}
+                      style={[styles.social, styles.shadow]}
+                    />
+                  </Block>
+                </Block>
+                <Block flex={0.1} middle>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                    }}
+                    muted
+                    size={16}
+                  >
+                    or be classical
+                  </Text>
+                </Block>
+                <Block flex={1} middle space='between'>
+                  <Block center flex={0.9}>
+                    <Block flex space='between'>
+                      <Block>
+                        <Block width={width * 0.8} style={{ marginBottom: 5 }}>
+                          <Input
+                            placeholder='First Name'
+                            style={styles.inputs}
+                            onChangeText={text =>
+                              setForm({ ...form, first_name: text })
+                            }
+                            iconContent={
+                              <Icon
+                                size={16}
+                                color='#ADB5BD'
+                                name='profile-circle'
+                                family='NowExtra'
+                                style={styles.inputIcons}
+                              />
+                            }
+                          />
                         </Block>
-                        <Block center>
-                          <Button
-                            color='INFO'
-                            round
-                            style={styles.createButton}
-                            onPress={() => handleSubmit(form)}
-                          >
-                            <Text size={14} color={nowTheme.COLORS.WHITE}>
-                              Get Started
-                            </Text>
-                          </Button>
+                        <Block width={width * 0.8} style={{ marginBottom: 5 }}>
+                          <Input
+                            placeholder='Last Name'
+                            style={styles.inputs}
+                            onChangeText={text =>
+                              setForm({ ...form, last_name: text })
+                            }
+                            iconContent={
+                              <Icon
+                                size={16}
+                                color='#ADB5BD'
+                                name='caps-small2x'
+                                family='NowExtra'
+                                style={styles.inputIcons}
+                              />
+                            }
+                          />
                         </Block>
+                        <Block width={width * 0.8} style={{ marginBottom: 5 }}>
+                          <Input
+                            onChangeText={text =>
+                              setForm({ ...form, password: text })
+                            }
+                            placeholder='Password'
+                            style={styles.inputs}
+                            secureTextEntry={true}
+                            iconContent={
+                              <Icon
+                                size={16}
+                                color='#ADB5BD'
+                                name='caps-small2x'
+                                family='NowExtra'
+                                style={styles.inputIcons}
+                              />
+                            }
+                          />
+                        </Block>
+                        <Block width={width * 0.8} style={{ marginBottom: 5 }}>
+                          <Input
+                            onChangeText={text =>
+                              setForm({ ...form, username: text })
+                            }
+                            placeholder='Username'
+                            style={styles.inputs}
+                            iconContent={
+                              <Icon
+                                size={16}
+                                color='#ADB5BD'
+                                name='caps-small2x'
+                                family='NowExtra'
+                                style={styles.inputIcons}
+                              />
+                            }
+                          />
+                        </Block>
+                        <Block width={width * 0.8}>
+                          <Input
+                            textContentType={"emailAddress"}
+                            onChangeText={text =>
+                              setForm({ ...form, email: text })
+                            }
+                            placeholder='Email'
+                            style={styles.inputs}
+                            iconContent={
+                              <Icon
+                                size={16}
+                                color='#ADB5BD'
+                                name='email-852x'
+                                family='NowExtra'
+                                style={styles.inputIcons}
+                              />
+                            }
+                          />
+                        </Block>
+                        <Block width={width * 0.8} style={{ marginBottom: 5 }}>
+                          <Input
+                            multiline={true}
+                            textAlignVertical='top'
+                            onChangeText={text =>
+                              setForm({ ...form, bio: text })
+                            }
+                            placeholder='Bio'
+                            style={styles.inputs}
+                            iconContent={
+                              <Icon
+                                size={16}
+                                color='#ADB5BD'
+                                name='caps-small2x'
+                                family='NowExtra'
+                                style={styles.inputIcons}
+                              />
+                            }
+                          />
+                        </Block>
+                      </Block>
+                      <Block center>
+                        <Button
+                          color='INFO'
+                          round
+                          style={styles.createButton}
+                          onPress={() => handleSubmit(form)}                        >
+                          <Text size={14} color={nowTheme.COLORS.WHITE}>
+                            Get Started
+                          </Text>
+                        </Button>
                       </Block>
                     </Block>
                   </Block>
                 </Block>
               </Block>
             </Block>
-          </ImageBackground>
+          </Block>
         </Block>
       </DismissKeyboard>
     </KeyboardAwareScrollView>

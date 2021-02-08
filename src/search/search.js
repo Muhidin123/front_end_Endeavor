@@ -7,7 +7,6 @@ const GooglePlacesInput = props => {
       placeholder='Search'
       fetchDetails={true}
       onPress={(data, details) => {
-        // console.log(data.description);
         console.log(details);
         props.handleDestination(details.geometry.location, data.description);
       }}
@@ -16,13 +15,11 @@ const GooglePlacesInput = props => {
         language: "en",
       }}
       styles={{
-        poweredContainer: {
-          borderRadius: 21.5,
-        },
         textInput: {
           marginTop: 5,
           flex: 1,
           borderRadius: 21.5,
+          height: 40
         },
       }}
     />

@@ -5,7 +5,6 @@ const { width, height } = Dimensions.get("screen");
 const { StyleSheet } = React;
 
 export default {
-
   containerView: {
     flex: 1,
   },
@@ -39,17 +38,25 @@ export default {
     marginRight: 15,
     marginTop: 5,
     marginBottom: 5,
+    borderRadius: 21.5,
   },
   loginButton: {
-    backgroundColor: "#3897f1",
-    borderRadius: 5,
+    backgroundColor: "#2CA8FF",
+    borderRadius: 21.5,
+    width: width * 0.5,
+    marginLeft: width * 0.25,
+    marginRight: width * 0.25,
     height: 45,
     marginTop: 20,
   },
   fbLoginButton: {
+    borderRadius: 21.5,
+    width: width * 0.5,
+    marginLeft: width * 0.25,
+    marginRight: width * 0.25,
     height: 45,
     marginTop: 10,
-    backgroundColor: "#3897f1",
+    backgroundColor: "#2CA8FF",
   },
   singUp: {
     fontSize: 18,

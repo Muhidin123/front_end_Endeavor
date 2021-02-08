@@ -1,13 +1,20 @@
-import React, { useContext } from "react";
-import { StyleSheet, Dimensions, ScrollView } from "react-native";
+import React, { useContext, useState } from "react";
+import { StyleSheet, Dimensions, ScrollView, LogBox } from "react-native";
 import { Block, theme } from "galio-framework";
 import { Card } from "../individual_components";
 import { Context } from "../../App";
 const { width } = Dimensions.get("screen");
 
 function Home() {
-  const item = useContext(Context);
-  const renderArticles = () => {
+  const ALL_FETCHED_TRIPS = useContext(Context);
+
+  const [input, setInput] = useState("");
+  const [tripsFiltered, setTripsFiltered] = useState(ALL_FETCHED_TRIPS);
+
+  tripsFiltered.filter(trip => {
+    return trip.title.toLowerCase() === input.toLowerCase();
+  });
+  const renderTrips = () => {
     return (
       <>
         <ScrollView
@@ -15,8 +22,8 @@ function Home() {
           contentContainerStyle={styles.articles}
         >
           <Block flex>
-            {item.map(trip => {
-              return <Card item={trip} horizontal />;
+            {tripsFiltered.map(trip => {
+              return <Card item={trip} horizontal key={trip.id} />;
             })}
           </Block>
         </ScrollView>
@@ -26,7 +33,7 @@ function Home() {
 
   return (
     <Block flex center style={styles.home}>
-      {renderArticles()}
+      {renderTrips()}
     </Block>
   );
 }

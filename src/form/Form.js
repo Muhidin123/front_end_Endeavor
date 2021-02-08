@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Dimensions,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
+
 import { Block, Text } from "galio-framework";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Button as ButtonSubmit, Icon, Input } from "../individual_components";
@@ -16,6 +17,9 @@ const { width, height } = Dimensions.get("screen");
 import Map from "../map/Map";
 import fetchCall from "../../Fetch";
 let fetchReq = new fetchCall();
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Alert } from "react-native";
+import ImagePickerExample from "../image_upload/imageUpload";
 const URL_POST_REQ_TRIP = "http://localhost:3000/api/v1/trips";
 
 const DismissKeyboard = ({ children }) => (
@@ -25,6 +29,20 @@ const DismissKeyboard = ({ children }) => (
 );
 
 export default function Form({ navigation }) {
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
+  const getCurrentUser = async () => {
+    try {
+      let jsonValue = await AsyncStorage.getItem("currentUser");
+      if (jsonValue !== null) {
+        jsonValue = JSON.parse(jsonValue);
+        return setForm({ ...form, user_id: jsonValue.user.id });
+      }
+    } catch (e) {
+      console.log("ERROR", e);
+    }
+  };
   const handleSubmit = e => {
     fetchReq
       .generalFetch(
@@ -37,15 +55,21 @@ export default function Form({ navigation }) {
       });
   };
 
+  const handleImage = image => {
+    setForm({ ...form, image: image.base64, file_name: "test_image_name.jpg" });
+    console.log("INSIDE OF HANDLEIMAGE AT FORM", image);
+  };
+
   const initialState = {
     title: "",
-    start: null,
-    end: null,
+    start: new Date().toISOString(),
+    end: new Date().toISOString(),
     destination_name: "",
     latitude: 0,
     longitude: 0,
-    user_id: 1,
+    user_id: null,
     public: true,
+    image: null,
   };
 
   const [form, setForm] = useState(initialState);
@@ -170,6 +194,7 @@ export default function Form({ navigation }) {
                         display='default'
                         style={styles.dateButton}
                       />
+                      <ImagePickerExample imageHandle={handleImage} />
                     </Block>
                   </Block>
                   <Block center>

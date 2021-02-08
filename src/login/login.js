@@ -9,16 +9,26 @@ import {
   TouchableWithoutFeedback,
   Alert,
   KeyboardAvoidingView,
+  LogBox,
 } from "react-native";
 import { Button } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
 const URL = "http://localhost:3000/api/v1/login";
 const URL_ON_REFRESH = "http://localhost:3000/api/v1/profile";
 import * as Facebook from "expo-facebook";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 let fetchReq = new fetchCall();
 
 const appId = "460873211757502";
+
+const storeCurrentUserData = async value => {
+  try {
+    const jsonValue = JSON.stringify(value);
+    await AsyncStorage.setItem("currentUser", jsonValue);
+  } catch (e) {
+    console.warn(e, "WARNING");
+  }
+};
 
 export default class LoginScreen extends Component {
   constructor(props) {
@@ -36,16 +46,13 @@ export default class LoginScreen extends Component {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.loginScreenContainer}>
             <View style={styles.loginFormView}>
-              <Text style={styles.logoText}>Trip-IT</Text>
+              <Text style={styles.logoText}>Endeavor</Text>
               <TextInput
                 placeholder='Username'
                 placeholderColor='#c4c3cb'
                 style={styles.loginFormTextInput}
                 onChangeText={text => this.setState({ username: text })}
                 name='username'
-                ref={input => {
-                  this.textInputUsername = input;
-                }}
               />
               <TextInput
                 placeholder='Password'
@@ -53,9 +60,6 @@ export default class LoginScreen extends Component {
                 style={styles.loginFormTextInput}
                 secureTextEntry={true}
                 onChangeText={text => this.setState({ password: text })}
-                ref={input => {
-                  this.textInputPassword = input;
-                }}
               />
               <Button
                 buttonStyle={styles.loginButton}
@@ -89,10 +93,9 @@ export default class LoginScreen extends Component {
       .then(data => {
         if (!data.user.error) {
           console.log(data);
-          this.textInputPassword.clear();
-          this.textInputUsername.clear();
+          storeCurrentUserData(data);
+          //RESET NAVIGATION SO USER CAN NOT GO BACK TO LOGIN OR SIGN UP
           this.props.navigation.reset({
-            //RESET NAVIGATION SO USER CAN NOT GO BACK TO LOGIN OR SIGN UP
             index: 0,
             routes: [{ name: "Home" }],
           });

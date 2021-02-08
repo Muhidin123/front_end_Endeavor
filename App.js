@@ -1,15 +1,17 @@
 import "react-native-gesture-handler";
 import React, { createContext, useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, LogBox } from "react-native";
 import LoginScreen from "./src/login/Login.js";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import fetchCall from "./Fetch";
-import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import MyTabs from "./src/screens/BottomTab.js";
 import Register from "./src/screens/Register.js";
+import SingleTripCard from "./src/screens/SingleTrip.js";
 
-const Tab = createMaterialBottomTabNavigator();
+LogBox.ignoreLogs([
+  "Require cycle: App.js -> src/screens/BottomTab.js -> src/screens/Home.js -> App.js",
+]);
 
 const Stack = createStackNavigator();
 const fetchReq = new fetchCall();
@@ -37,6 +39,7 @@ function App() {
           <Stack.Screen name='Login' component={LoginScreen} />
           <Stack.Screen name='Home' component={MyTabs} />
           <Stack.Screen name='SignUp' component={Register} />
+          <Stack.Screen name='SingleTripCard' component={SingleTripCard} />
         </Stack.Navigator>
       </NavigationContainer>
     </Context.Provider>
