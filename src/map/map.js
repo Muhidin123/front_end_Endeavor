@@ -2,28 +2,66 @@ import * as React from "react";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 
 import { Marker } from "react-native-maps";
-import { StyleSheet, View, Dimensions, Text, Button } from "react-native";
+import { StyleSheet, View, Dimensions } from "react-native";
 
-export default function Map({ coordinates, navigation }) {
+export default function Map({ fullCoordinates }) {
+  console.log(fullCoordinates);
+  const regionContainingPoints = points => {
+    let minLat, maxLat, minLng, maxLng;
+
+    // init first point
+    (point => {
+      minLat = point.lat;
+      maxLat = point.lat;
+      minLng = point.lng;
+      maxLng = point.lng;
+    })(points[0]);
+
+    // calculate rect
+    points.forEach(point => {
+      minLat = Math.min(minLat, point.lat);
+      maxLat = Math.max(maxLat, point.lat);
+      minLng = Math.min(minLng, point.lng);
+      maxLng = Math.max(maxLng, point.lng);
+    });
+
+    const midLat = (minLat + maxLat) / 2;
+    const midLng = (minLng + maxLng) / 2;
+
+    const deltaLat = maxLat - minLat;
+    const deltaLng = maxLng - minLng;
+
+    return {
+      lat: midLat,
+      lng: midLng,
+      latDelta: deltaLat,
+      lngDelta: deltaLng,
+    };
+  };
+
   return (
     <View style={styles.container}>
       <MapView
-        provider={PROVIDER_GOOGLE}
         showsMyLocationButton={true}
         style={styles.map}
         showsUserLocation={true}
         zoomEnabled={true}
-        initialRegion={{
-          latitude: 1,
-          longitude: 1,
-          latitudeDelta: 0.0043,
-          longitudeDelta: 0.0034,
+        loadingEnabled={true}
+        userLocationAnnotationTitle='Muhidin Hukic'
+        loadingBackgroundColor='#fff'
+        region={{
+          latitude: regionContainingPoints(fullCoordinates).lat,
+          longitude: regionContainingPoints(fullCoordinates).lng,
+          latitudeDelta: regionContainingPoints(fullCoordinates).latDelta,
+          longitudeDelta: regionContainingPoints(fullCoordinates).lngDelta,
         }}
       >
         <Marker
           coordinate={{
-            longitude: coordinates.longitude,
-            latitude: coordinates.latitude,
+            latitude: regionContainingPoints(fullCoordinates).lat,
+            longitude: regionContainingPoints(fullCoordinates).lng,
+            latitudeDelta: regionContainingPoints(fullCoordinates).latDelta,
+            longitudeDelta: regionContainingPoints(fullCoordinates).lngDelta,
           }}
         />
       </MapView>
@@ -40,7 +78,7 @@ const styles = StyleSheet.create({
   },
   map: {
     width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height / 2.5,
+    height: Dimensions.get("window").height / 2,
     position: "relative",
   },
 });

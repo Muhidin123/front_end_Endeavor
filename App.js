@@ -1,13 +1,14 @@
 import "react-native-gesture-handler";
 import React, { createContext, useEffect, useState } from "react";
-import { StyleSheet, LogBox } from "react-native";
-import LoginScreen from "./src/login/Login.js";
+import { LogBox } from "react-native";
+import LoginScreen from "./src/login/Login";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import fetchCall from "./Fetch";
 import MyTabs from "./src/screens/BottomTab.js";
 import Register from "./src/screens/Register.js";
 import SingleTripCard from "./src/screens/SingleTrip.js";
+import FormCheckpoint from "./src/form/FormCheckpoint.js";
 
 LogBox.ignoreLogs([
   "Require cycle: App.js -> src/screens/BottomTab.js -> src/screens/Home.js -> App.js",
@@ -40,10 +41,10 @@ function App() {
           <Stack.Screen name='Home' component={MyTabs} />
           <Stack.Screen name='SignUp' component={Register} />
           <Stack.Screen name='SingleTripCard' component={SingleTripCard} />
+          <Stack.Screen name='NewCheckpointForm' component={FormCheckpoint} />
         </Stack.Navigator>
       </NavigationContainer>
     </Context.Provider>
   );
 }
-const styles = StyleSheet.create({});
 export default App;

@@ -68,7 +68,7 @@ function Card(props) {
                 style={titleStyles}
                 color={nowTheme.COLORS.SECONDARY}
               >
-                {item.title}
+                {item.title || item.description}
               </Text>
               {/* {CHECK FOR ITEN SUBTITLE TO DISPLAY ON THE CARD} */}
               {item.subtitle ? (
@@ -84,7 +84,7 @@ function Card(props) {
               ) : (
                 <Block />
               )}
-              {item.description ? (
+              {/* {item.description ? (
                 <Block flex center>
                   <Text
                     style={{
@@ -100,7 +100,7 @@ function Card(props) {
                 </Block>
               ) : (
                 <Block />
-              )}
+              )} */}
               {/* {BODY OF THE CARD JUST UNDER THE DESCRIPTION} */}
               {item.note ? (
                 <Block flex left>

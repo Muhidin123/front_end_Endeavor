@@ -1,33 +1,57 @@
 import React, { useContext, useState } from "react";
-import { StyleSheet, Dimensions, ScrollView, LogBox } from "react-native";
+import { StyleSheet, Dimensions, ScrollView, View } from "react-native";
 import { Block, theme } from "galio-framework";
 import { Card } from "../individual_components";
 import { Context } from "../../App";
+import { SearchBar } from "react-native-elements";
+
 const { width } = Dimensions.get("screen");
 
 function Home() {
   const ALL_FETCHED_TRIPS = useContext(Context);
 
+  const [trips, _setTripsFiltered] = useState(ALL_FETCHED_TRIPS);
   const [input, setInput] = useState("");
-  const [tripsFiltered, setTripsFiltered] = useState(ALL_FETCHED_TRIPS);
 
-  tripsFiltered.filter(trip => {
-    return trip.title.toLowerCase() === input.toLowerCase();
+  function SearchBarComponent() {
+    return (
+      <SearchBar
+        placeholder='Search...'
+        onChangeText={text => setInput(text.toLowerCase())}
+        value={input}
+        lightTheme={true}
+        round={true}
+        containerStyle={{ borderRadius: 21.5, height: 50 }}
+        inputContainerStyle={{ backgroundColor: "white" }}
+        platform='ios'
+        inputStyle={{ backgroundColor: "white" }}
+      />
+    );
+  }
+
+  const filteredTrips = trips.filter(trip => {
+    return (
+      trip.title.toLowerCase().includes(input) ||
+      trip.note.toLowerCase().includes(input) ||
+      trip["destination_name"].toLowerCase().includes(input)
+    );
   });
+
   const renderTrips = () => {
     return (
-      <>
+      <View>
+        {SearchBarComponent()}
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.articles}
         >
           <Block flex>
-            {tripsFiltered.map(trip => {
+            {filteredTrips.map(trip => {
               return <Card item={trip} horizontal key={trip.id} />;
             })}
           </Block>
         </ScrollView>
-      </>
+      </View>
     );
   };
 

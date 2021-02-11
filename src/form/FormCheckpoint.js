@@ -17,7 +17,7 @@ const { width, height } = Dimensions.get("screen");
 import Map from "../map/Map";
 import fetchCall from "../../Fetch";
 let fetchReq = new fetchCall();
-import AsyncStorage from "@react-native-async-storage/async-storage";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 import ImagePickerExample from "../image_upload/imageUpload";
 const URL_POST_REQ_TRIP = "http://localhost:3000/api/v1/trips";
 
@@ -27,21 +27,21 @@ const DismissKeyboard = ({ children }) => (
   </TouchableWithoutFeedback>
 );
 
-export default function Form({ navigation }) {
-  useEffect(() => {
-    getCurrentUser();
-  }, []);
-  const getCurrentUser = async () => {
-    try {
-      let jsonValue = await AsyncStorage.getItem("currentUser");
-      if (jsonValue !== null) {
-        jsonValue = JSON.parse(jsonValue);
-        return setForm({ ...form, user_id: jsonValue.user.id });
-      }
-    } catch (e) {
-      console.log("ERROR", e);
-    }
-  };
+export default function FormCheckpoint({ navigation }) {
+  //   useEffect(() => {
+  //     getCurrentUser();
+  //   }, []);
+  //   const getCurrentUser = async () => {
+  //     try {
+  //       let jsonValue = await AsyncStorage.getItem("currentUser");
+  //       if (jsonValue !== null) {
+  //         jsonValue = JSON.parse(jsonValue);
+  //         return setForm({ ...form, user_id: jsonValue.user.id });
+  //       }
+  //     } catch (e) {
+  //       console.log("ERROR", e);
+  //     }
+  //   };
   const handleSubmit = e => {
     fetchReq
       .generalFetch(
@@ -54,20 +54,21 @@ export default function Form({ navigation }) {
   };
 
   const handleImage = image => {
-    // setForm({ ...form, image: image.base64, file_name: "test_image_name.jpg" });
-    // console.log(image["file_name"]);
+    setForm({ ...form, image: image.base64, file_name: "test_image_name.jpg" });
+    console.log("INSIDE OF HANDLEIMAGE AT FORM", image);
   };
 
   const initialState = {
     title: "",
     start: new Date().toISOString(),
-    end: new Date().toISOString(),
+    time: null,
     destination_name: "",
     latitude: 0,
     longitude: 0,
-    user_id: null,
-    public: true,
+    trip_id: null,
     image: null,
+    description: "",
+    note: "",
   };
 
   const [form, setForm] = useState(initialState);
@@ -177,11 +178,7 @@ export default function Form({ navigation }) {
                         is24Hour={true}
                         display='default'
                         style={styles.dateButton}
-                        onChange={
-                          setStart
-                          // (_event, date) =>
-                          // setForm({ ...form, start: date.toISOString() })
-                        }
+                        onChange={setStart}
                       />
                     </Block>
                     <Block width={width * 0.8} style={{ marginBottom: 5 }}>
@@ -272,11 +269,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#E3E3E3",
     borderRadius: 21.5,
-  },
-  passwordCheck: {
-    paddingLeft: 2,
-    paddingTop: 6,
-    paddingBottom: 15,
   },
   createButton: {
     width: width * 0.5,

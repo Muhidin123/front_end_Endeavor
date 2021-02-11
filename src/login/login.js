@@ -9,7 +9,6 @@ import {
   TouchableWithoutFeedback,
   Alert,
   KeyboardAvoidingView,
-  LogBox,
 } from "react-native";
 import { Button } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -75,7 +74,6 @@ export default class LoginScreen extends Component {
               <TouchableOpacity
                 onPress={() => {
                   this.props.navigation.push("SignUp");
-                  console.log("pressed");
                 }}
               >
                 <Text style={styles.singUp}>Sign up ?</Text>
@@ -91,16 +89,16 @@ export default class LoginScreen extends Component {
     fetchReq
       .generalFetch(URL, fetchReq.makeOptions("POST", this.state))
       .then(data => {
-        if (!data.user.error) {
-          console.log(data);
+        if (!data.error) {
           storeCurrentUserData(data);
           //RESET NAVIGATION SO USER CAN NOT GO BACK TO LOGIN OR SIGN UP
           this.props.navigation.reset({
             index: 0,
             routes: [{ name: "Home" }],
           });
+        } else {
+          Alert.alert(data.error);
         }
-        console.log("Error");
       });
   }
 
