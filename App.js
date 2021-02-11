@@ -21,11 +21,10 @@ URL = "http://localhost:3000/api/v1/trips";
 
 export const Context = createContext(null);
 function App() {
-  const [allTrips, setAllTrips] = useState(null);
+  const [allTrips, setAllTrips] = useState([]);
   const fetchAllTrips = () => {
     fetchReq.generalFetch(URL).then(trips => {
-      let a = trips;
-      setAllTrips(a);
+      setAllTrips(trips);
     });
   };
 
@@ -33,8 +32,12 @@ function App() {
     fetchAllTrips();
   }, []);
 
+  const updateTrips = trip => {
+    let test = allTrips.push(trip);
+  };
+
   return (
-    <Context.Provider value={allTrips}>
+    <Context.Provider value={{ allTrips, test: updateTrips }}>
       <NavigationContainer initialRouteName='Login'>
         <Stack.Navigator>
           <Stack.Screen name='Login' component={LoginScreen} />

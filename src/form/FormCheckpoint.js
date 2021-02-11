@@ -18,7 +18,7 @@ import Map from "../map/Map";
 import fetchCall from "../../Fetch";
 let fetchReq = new fetchCall();
 // import AsyncStorage from "@react-native-async-storage/async-storage";
-import ImagePickerExample from "../image_upload/imageUpload";
+import ImagePicker from "../image_upload/imageUpload";
 const URL_POST_REQ_TRIP = "http://localhost:3000/api/v1/trips";
 
 const DismissKeyboard = ({ children }) => (
@@ -43,24 +43,18 @@ export default function FormCheckpoint({ navigation }) {
   //     }
   //   };
   const handleSubmit = e => {
-    fetchReq
-      .generalFetch(
-        URL_POST_REQ_TRIP,
-        fetchReq.makeOptions("POST", { trip: e })
-      )
-      .then(data => {
-        navigation.push("Home");
-      });
+    console.log("SUBMITED");
   };
 
   const handleImage = image => {
-    setForm({ ...form, image: image.base64, file_name: "test_image_name.jpg" });
-    console.log("INSIDE OF HANDLEIMAGE AT FORM", image);
+    let name = image.uri.split("/");
+    name = name[name.length - 1];
+    setForm({ ...form, image: image.base64, file_name: name });
   };
 
   const initialState = {
     title: "",
-    start: new Date().toISOString(),
+    date: new Date().toISOString(),
     time: null,
     destination_name: "",
     latitude: 0,
@@ -74,7 +68,6 @@ export default function FormCheckpoint({ navigation }) {
   const [form, setForm] = useState(initialState);
   const [fullCoordinates, setFullcoordinates] = useState([{ lat: 0, lng: 0 }]);
   const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
 
   const handleDestination = (e, name, fullCoordinates) => {
     setForm({
@@ -92,13 +85,6 @@ export default function FormCheckpoint({ navigation }) {
       start: date.toISOString(),
     });
     setStartDate(date);
-  };
-  const setEnd = (_event, date) => {
-    setForm({
-      ...form,
-      end: date.toISOString(),
-    });
-    setEndDate(date);
   };
   return (
     <KeyboardAwareScrollView keyboardShouldPersistTaps={"handled"}>
@@ -174,24 +160,15 @@ export default function FormCheckpoint({ navigation }) {
                       <DateTimePicker
                         testID='dateTimePicker'
                         value={startDate}
-                        mode='date'
+                        mode='datetime'
                         is24Hour={true}
                         display='default'
                         style={styles.dateButton}
-                        onChange={setStart}
+                        onChange={(e, date) => console.log(date)}
                       />
                     </Block>
                     <Block width={width * 0.8} style={{ marginBottom: 5 }}>
-                      <Text>End date</Text>
-                      <DateTimePicker
-                        onChange={setEnd}
-                        testID='dateTimePicker'
-                        value={endDate}
-                        mode='date'
-                        display='default'
-                        style={styles.dateButton}
-                      />
-                      <ImagePickerExample imageHandle={handleImage} />
+                      <ImagePicker imageHandle={handleImage} />
                     </Block>
                   </Block>
                   <Block center>

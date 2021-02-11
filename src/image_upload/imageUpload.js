@@ -19,7 +19,7 @@ export default function ImagePickerExample(props) {
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      // base64: true,
+      base64: true,
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
@@ -27,7 +27,6 @@ export default function ImagePickerExample(props) {
     });
 
     if (!result.cancelled) {
-      console.log(result);
       props.imageHandle(result);
     }
   };

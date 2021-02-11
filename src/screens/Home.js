@@ -10,7 +10,7 @@ const { width } = Dimensions.get("screen");
 function Home() {
   const ALL_FETCHED_TRIPS = useContext(Context);
 
-  const [trips, _setTripsFiltered] = useState(ALL_FETCHED_TRIPS);
+  const [trips, _setTripsFiltered] = useState(ALL_FETCHED_TRIPS.allTrips);
   const [input, setInput] = useState("");
 
   function SearchBarComponent() {

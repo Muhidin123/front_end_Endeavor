@@ -5,7 +5,6 @@ import { Marker } from "react-native-maps";
 import { StyleSheet, View, Dimensions } from "react-native";
 
 export default function Map({ fullCoordinates }) {
-  console.log(fullCoordinates);
   const regionContainingPoints = points => {
     let minLat, maxLat, minLng, maxLng;
 

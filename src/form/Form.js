@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   StyleSheet,
   Dimensions,
@@ -20,6 +20,7 @@ let fetchReq = new fetchCall();
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ImagePickerExample from "../image_upload/imageUpload";
 const URL_POST_REQ_TRIP = "http://localhost:3000/api/v1/trips";
+import { Context } from "../../App";
 
 const DismissKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -28,6 +29,7 @@ const DismissKeyboard = ({ children }) => (
 );
 
 export default function Form({ navigation }) {
+  const TripsContext = useContext(Context);
   useEffect(() => {
     getCurrentUser();
   }, []);
@@ -49,13 +51,16 @@ export default function Form({ navigation }) {
         fetchReq.makeOptions("POST", { trip: e })
       )
       .then(data => {
+        console.log(data);
+        TripsContext.test(data);
         navigation.push("Home");
       });
   };
 
   const handleImage = image => {
-    // setForm({ ...form, image: image.base64, file_name: "test_image_name.jpg" });
-    // console.log(image["file_name"]);
+    let name = image.uri.split("/");
+    name = name[name.length - 1];
+    setForm({ ...form, image: image.base64, file_name: name });
   };
 
   const initialState = {
