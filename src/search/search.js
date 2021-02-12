@@ -2,9 +2,41 @@ import React from "react";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 
 const GooglePlacesInput = props => {
+  const regionContainingPoints = points => {
+    let minLat, maxLat, minLng, maxLng;
+
+    // init first point
+    (point => {
+      minLat = point.lat;
+      maxLat = point.lat;
+      minLng = point.lng;
+      maxLng = point.lng;
+    })(points[0]);
+
+    // calculate rect
+    points.forEach(point => {
+      minLat = Math.min(minLat, point.lat);
+      maxLat = Math.max(maxLat, point.lat);
+      minLng = Math.min(minLng, point.lng);
+      maxLng = Math.max(maxLng, point.lng);
+    });
+
+    const midLat = (minLat + maxLat) / 2;
+    const midLng = (minLng + maxLng) / 2;
+
+    const deltaLat = maxLat - minLat;
+    const deltaLng = maxLng - minLng;
+
+    return {
+      lat: midLat,
+      lng: midLng,
+      latDelta: deltaLat,
+      lngDelta: deltaLng,
+    };
+  };
   return (
     <GooglePlacesAutocomplete
-      placeholder='Search For a place'
+      placeholder='Destination name'
       fetchDetails={true}
       onPress={(data, details) => {
         let fullCoordinates = [
@@ -15,7 +47,8 @@ const GooglePlacesInput = props => {
         props.handleDestination(
           details.geometry,
           data.description,
-          fullCoordinates
+          fullCoordinates,
+          regionContainingPoints(fullCoordinates)
         );
       }}
       query={{

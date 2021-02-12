@@ -10,13 +10,12 @@ export default {
   },
   loginScreenContainer: {
     flex: 1,
+    backgroundColor: "white",
   },
   logoText: {
-    fontSize: 40,
-    fontWeight: "800",
-    marginTop: 150,
-    marginBottom: 30,
-    textAlign: "center",
+    width: width / 1.5,
+    height: height / 4,
+    marginLeft: 70,
   },
   loginFormView: {
     flex: 1,

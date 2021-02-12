@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Dimensions,
@@ -11,15 +11,13 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { Button as ButtonSubmit, Icon, Input } from "../individual_components";
 import { nowTheme } from "../constants/index";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { View } from "react-native";
-import GooglePlacesInput from "../search/Search";
+import GooglePlacesInput from "../search/search";
 const { width, height } = Dimensions.get("screen");
-import Map from "../map/Map";
+import Map from "../map/map";
 import fetchCall from "../../Fetch";
 let fetchReq = new fetchCall();
-// import AsyncStorage from "@react-native-async-storage/async-storage";
 import ImagePicker from "../image_upload/imageUpload";
-const URL_POST_REQ_TRIP = "http://localhost:3000/api/v1/trips";
+const URL_POST_REQ_CHECKPOINTS = "http://localhost:3000/api/v1/checkpoints";
 
 const DismissKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -27,40 +25,36 @@ const DismissKeyboard = ({ children }) => (
   </TouchableWithoutFeedback>
 );
 
-export default function FormCheckpoint({ navigation }) {
-  //   useEffect(() => {
-  //     getCurrentUser();
-  //   }, []);
-  //   const getCurrentUser = async () => {
-  //     try {
-  //       let jsonValue = await AsyncStorage.getItem("currentUser");
-  //       if (jsonValue !== null) {
-  //         jsonValue = JSON.parse(jsonValue);
-  //         return setForm({ ...form, user_id: jsonValue.user.id });
-  //       }
-  //     } catch (e) {
-  //       console.log("ERROR", e);
-  //     }
-  //   };
+export default function FormCheckpoint({ route, navigation }) {
+  const trip_id = route.params.itemId;
+
   const handleSubmit = e => {
-    console.log("SUBMITED");
+    fetchReq
+      .generalFetch(
+        URL_POST_REQ_CHECKPOINTS,
+        fetchReq.makeOptions("POST", { checkpoint: e })
+      )
+      .then(data => {
+        navigation.push("Home");
+      });
   };
 
   const handleImage = image => {
     let name = image.uri.split("/");
     name = name[name.length - 1];
-    setForm({ ...form, image: image.base64, file_name: name });
+    setForm({ ...form, picture: image.base64, file_name: name });
   };
 
   const initialState = {
     title: "",
     date: new Date().toISOString(),
-    time: null,
     destination_name: "",
     latitude: 0,
     longitude: 0,
-    trip_id: null,
-    image: null,
+    latitude_delta: 0,
+    longitude_delta: 0,
+    trip_id,
+    picture: null,
     description: "",
     note: "",
   };
@@ -69,12 +63,14 @@ export default function FormCheckpoint({ navigation }) {
   const [fullCoordinates, setFullcoordinates] = useState([{ lat: 0, lng: 0 }]);
   const [startDate, setStartDate] = useState(new Date());
 
-  const handleDestination = (e, name, fullCoordinates) => {
+  const handleDestination = (e, name, fullCoordinates, deltas) => {
     setForm({
       ...form,
-      latitude: e.location.lat,
-      longitude: e.location.lng,
+      latitude: deltas.lat,
+      longitude: deltas.lng,
       destination_name: name,
+      latitude_delta: deltas.latDelta,
+      longitude_delta: deltas.lngDelta,
     });
     setFullcoordinates(fullCoordinates);
   };
@@ -115,6 +111,11 @@ export default function FormCheckpoint({ navigation }) {
                 <Block flex space='between'>
                   <Block>
                     <Block width={width * 0.8} style={{ marginBottom: 5 }}>
+                      <GooglePlacesInput
+                        handleDestination={handleDestination}
+                      />
+                    </Block>
+                    <Block width={width * 0.8} style={{ marginBottom: 5 }}>
                       <Input
                         placeholder='Title'
                         style={styles.inputs}
@@ -147,16 +148,24 @@ export default function FormCheckpoint({ navigation }) {
                       />
                     </Block>
                     <Block width={width * 0.8} style={{ marginBottom: 5 }}>
-                      <GooglePlacesInput
-                        handleDestination={handleDestination}
+                      <Input
+                        placeholder='Description'
+                        style={styles.inputs}
+                        onChangeText={text =>
+                          setForm({ ...form, description: text })
+                        }
+                        iconContent={
+                          <Icon
+                            size={16}
+                            color='#ADB5BD'
+                            name='caps-small2x'
+                            family='NowExtra'
+                            style={styles.inputIcons}
+                          />
+                        }
                       />
                     </Block>
-                    <View
-                      width={width * 0.8}
-                      style={{ marginBottom: 5 }}
-                    ></View>
                     <Block width={width * 0.8}>
-                      <Text>Start date</Text>
                       <DateTimePicker
                         testID='dateTimePicker'
                         value={startDate}

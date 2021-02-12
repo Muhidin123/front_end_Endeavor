@@ -31,7 +31,7 @@ export default function Register({ navigation }) {
           //RESET NAVIGATION SO USER CAN NOT GO BACK TO LOGIN OR SIGN UP
           navigation.reset({
             index: 0,
-            routes: [{ name: "Welcome" }],
+            routes: [{ name: "Home" }],
           });
         }
         console.log(data.error);
@@ -219,7 +219,8 @@ export default function Register({ navigation }) {
                           color='INFO'
                           round
                           style={styles.createButton}
-                          onPress={() => handleSubmit(form)}                        >
+                          onPress={() => handleSubmit(form)}
+                        >
                           <Text size={14} color={nowTheme.COLORS.WHITE}>
                             Get Started
                           </Text>

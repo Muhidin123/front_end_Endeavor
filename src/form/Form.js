@@ -12,9 +12,9 @@ import { Button as ButtonSubmit, Icon, Input } from "../individual_components";
 import { nowTheme } from "../constants/index";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { View } from "react-native";
-import GooglePlacesInput from "../search/Search";
+import GooglePlacesInput from "../search/search";
 const { width, height } = Dimensions.get("screen");
-import Map from "../map/Map";
+import Map from "../map/map";
 import fetchCall from "../../Fetch";
 let fetchReq = new fetchCall();
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -52,7 +52,7 @@ export default function Form({ navigation }) {
       )
       .then(data => {
         console.log(data);
-        TripsContext.test(data);
+        TripsContext.addTrip(data);
         navigation.push("Home");
       });
   };
@@ -70,6 +70,8 @@ export default function Form({ navigation }) {
     destination_name: "",
     latitude: 0,
     longitude: 0,
+    latitude_delta: 0,
+    longitude_delta: 0,
     user_id: null,
     public: true,
     image: null,
@@ -80,11 +82,13 @@ export default function Form({ navigation }) {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
-  const handleDestination = (e, name, fullCoordinates) => {
+  const handleDestination = (e, name, fullCoordinates, deltas) => {
     setForm({
       ...form,
-      latitude: e.location.lat,
-      longitude: e.location.lng,
+      latitude: deltas.lat,
+      longitude: deltas.lng,
+      latitude_delta: deltas.latDelta,
+      longitude_delta: deltas.lngDelta,
       destination_name: name,
     });
     setFullcoordinates(fullCoordinates);

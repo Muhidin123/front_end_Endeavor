@@ -9,6 +9,8 @@ import {
   TouchableWithoutFeedback,
   Alert,
   KeyboardAvoidingView,
+  Image,
+  ActivityIndicator,
 } from "react-native";
 import { Button } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -45,7 +47,11 @@ export default class LoginScreen extends Component {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.loginScreenContainer}>
             <View style={styles.loginFormView}>
-              <Text style={styles.logoText}>Endeavor</Text>
+              {/* <Text style={styles.logoText}>Endeavor</Text> */}
+              <Image
+                source={require("../../assets/imgs/endeavor.png")}
+                style={styles.logoText}
+              />
               <TextInput
                 placeholder='Username'
                 placeholderColor='#c4c3cb'

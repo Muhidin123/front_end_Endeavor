@@ -3,7 +3,7 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Form from "../form/Form";
 import Home from "../screens/Home";
-import LoginScreen from "../login/Login";
+import LoginScreen from "../login/login";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 const Tab = createMaterialBottomTabNavigator();
 
