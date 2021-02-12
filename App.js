@@ -1,7 +1,7 @@
 import "react-native-gesture-handler";
 import React, { createContext, useEffect, useState } from "react";
 import { LogBox } from "react-native";
-import LoginScreen from "./src/login/Login";
+import LoginScreen from "./src/login/login";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import fetchCall from "./Fetch";
@@ -32,19 +32,22 @@ function App() {
     fetchAllTrips();
   }, []);
 
-  const updateTrips = trip => {
-    let test = allTrips.push(trip);
+  const updateTrips = trip => setAllTrips(allTrips, allTrips.push(trip));
+
+  const testingIt = {
+    allTrips,
+    addTrip: updateTrips,
   };
 
   return (
-    <Context.Provider value={{ allTrips, test: updateTrips }}>
+    <Context.Provider value={testingIt}>
       <NavigationContainer initialRouteName='Login'>
         <Stack.Navigator>
           <Stack.Screen name='Login' component={LoginScreen} />
           <Stack.Screen name='Home' component={MyTabs} />
           <Stack.Screen name='SignUp' component={Register} />
-          <Stack.Screen name='SingleTripCard' component={SingleTripCard} />
-          <Stack.Screen name='NewCheckpointForm' component={FormCheckpoint} />
+          <Stack.Screen name='Trip' component={SingleTripCard} />
+          <Stack.Screen name='Add checkpoint' component={FormCheckpoint} />
         </Stack.Navigator>
       </NavigationContainer>
     </Context.Provider>

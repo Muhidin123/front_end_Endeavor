@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Dimensions, ScrollView, View } from "react-native";
 const { width } = Dimensions.get("screen");
 import { Block, theme } from "galio-framework";
@@ -10,11 +10,7 @@ const fetchReq = new fetchCall();
 
 export default function SingleTripCard({ route, navigation }) {
   const trip = route.params.trip;
-  const checkpoints = trip.checkpoints;
 
-  console.log(trip);
-
-  const getSingleTrip = () => {};
   return (
     <Block flex center style={styles.home}>
       <ScrollView
@@ -26,7 +22,7 @@ export default function SingleTripCard({ route, navigation }) {
             <Card item={trip} full key={trip.id} />
           </Block>
           <Block flex>
-            {checkpoints.map(checkpoint => {
+            {trip.checkpoints.map(checkpoint => {
               return <Card item={checkpoint} horizontal key={checkpoint.id} />;
             })}
           </Block>
@@ -36,9 +32,9 @@ export default function SingleTripCard({ route, navigation }) {
             small={true}
             style={styles.button}
             color='info'
-            onPress={() => {
-              navigation.push("NewCheckpointForm");
-            }}
+            onPress={() =>
+              navigation.navigate("Add checkpoint", { itemId: trip.id })
+            }
           >
             <MaterialCommunityIcons name='plus' size={24} />
           </ButtonNew>

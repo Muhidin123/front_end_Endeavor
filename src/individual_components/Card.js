@@ -41,7 +41,7 @@ function Card(props) {
     <>
       <Block row={horizontal} card flex style={cardContainer}>
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate("SingleTripCard", { trip: item })}
+          onPress={() => navigation.navigate("Trip", { trip: item })}
         >
           <Block flex style={imgContainer}>
             <Image
