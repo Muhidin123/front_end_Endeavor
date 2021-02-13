@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import { StyleSheet, Image, TouchableWithoutFeedback } from "react-native";
 import { Block, Text, theme } from "galio-framework";
 import * as Font from "expo-font";
+import { Dimensions } from "react-native";
+const { width, height } = Dimensions.get("screen");
 
 let customFonts = {
   "montserrat-regular": require("../../assets/font/Montserrat-Regular.ttf"),
@@ -147,7 +149,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: theme.COLORS.WHITE,
     marginVertical: theme.SIZES.BASE,
-    borderWidth: 0,
+    borderWidth: 0.2,
     minHeight: 114,
     marginBottom: 4,
   },

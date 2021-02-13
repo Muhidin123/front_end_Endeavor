@@ -33,10 +33,19 @@ function App() {
   }, []);
 
   const updateTrips = trip => setAllTrips(allTrips, allTrips.push(trip));
+  const addCheckpoint = checkpoint => {
+    // const updatedTrip = allTrips.filter(trip => {
+    //   trip.id === checkpoint["trip_id"];
+    // });
+    // updatedTrip.checkpoints.push(checkpoint);
+    // return setAllTrips(allTrips, updatedTrip);
+    console.log(allTrips);
+  };
 
   const testingIt = {
     allTrips,
     addTrip: updateTrips,
+    addCheckpoint,
   };
 
   return (

@@ -1,16 +1,14 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, Dimensions, ScrollView, View } from "react-native";
 import { Block, theme } from "galio-framework";
 import { Card } from "../individual_components";
 import { Context } from "../../App";
 import { SearchBar } from "react-native-elements";
-
 const { width } = Dimensions.get("screen");
 
 function Home() {
   const ALL_FETCHED_TRIPS = useContext(Context);
-
-  const [trips, _setTripsFiltered] = useState(ALL_FETCHED_TRIPS.allTrips);
+  const [trips, _setTrips] = useState(ALL_FETCHED_TRIPS.allTrips);
   const [input, setInput] = useState("");
 
   function SearchBarComponent() {

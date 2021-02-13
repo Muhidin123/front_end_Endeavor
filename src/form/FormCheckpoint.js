@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   StyleSheet,
   Dimensions,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-
 import { Block, Text } from "galio-framework";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Button as ButtonSubmit, Icon, Input } from "../individual_components";
@@ -18,6 +17,7 @@ import fetchCall from "../../Fetch";
 let fetchReq = new fetchCall();
 import ImagePicker from "../image_upload/imageUpload";
 const URL_POST_REQ_CHECKPOINTS = "http://localhost:3000/api/v1/checkpoints";
+import { Context } from "../../App";
 
 const DismissKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -26,17 +26,23 @@ const DismissKeyboard = ({ children }) => (
 );
 
 export default function FormCheckpoint({ route, navigation }) {
+  const TripsContext = useContext(Context);
   const trip_id = route.params.itemId;
 
   const handleSubmit = e => {
-    fetchReq
-      .generalFetch(
-        URL_POST_REQ_CHECKPOINTS,
-        fetchReq.makeOptions("POST", { checkpoint: e })
-      )
-      .then(data => {
-        navigation.push("Home");
-      });
+    // fetchReq
+    //   .generalFetch(
+    //     URL_POST_REQ_CHECKPOINTS,
+    //     fetchReq.makeOptions("POST", { checkpoint: e })
+    //   )
+    //   .then(data => {
+    //     TripsContext.addCheckpoint(data);
+    //     navigation.reset({
+    //       index: 0,
+    //       routes: [{ name: "Home" }],
+    //     });
+    //   });
+    TripsContext.addCheckpoint("a");
   };
 
   const handleImage = image => {
@@ -78,7 +84,7 @@ export default function FormCheckpoint({ route, navigation }) {
   const setStart = (_event, date) => {
     setForm({
       ...form,
-      start: date.toISOString(),
+      date: date.toISOString(),
     });
     setStartDate(date);
   };
@@ -173,7 +179,7 @@ export default function FormCheckpoint({ route, navigation }) {
                         is24Hour={true}
                         display='default'
                         style={styles.dateButton}
-                        onChange={(e, date) => console.log(date)}
+                        onChange={(e, date) => setStart(e, date)}
                       />
                     </Block>
                     <Block width={width * 0.8} style={{ marginBottom: 5 }}>
