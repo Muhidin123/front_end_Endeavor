@@ -4,8 +4,6 @@ import PropTypes from "prop-types";
 import { StyleSheet, Image, TouchableWithoutFeedback } from "react-native";
 import { Block, Text, theme } from "galio-framework";
 import * as Font from "expo-font";
-import { Dimensions } from "react-native";
-const { width, height } = Dimensions.get("screen");
 
 let customFonts = {
   "montserrat-regular": require("../../assets/font/Montserrat-Regular.ttf"),
@@ -39,11 +37,26 @@ function Card(props) {
     horizontal ? styles.horizontalStyles : styles.verticalStyles,
     styles.shadow,
   ];
+
+  const coordinates = () => {
+    return {
+      latitude: item.latitude,
+      longitude: item.longitude,
+      latitudeDelta: item.latitude_delta,
+      longitudeDelta: item.longitude_delta,
+      image: item.image,
+    };
+  };
+
   return (
     <>
       <Block row={horizontal} card flex style={cardContainer}>
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate("Trip", { trip: item })}
+          onPress={() =>
+            navigation.navigate("Trip", {
+              trip: item,
+            })
+          }
         >
           <Block flex style={imgContainer}>
             <Image
@@ -60,7 +73,11 @@ function Card(props) {
           </Block>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback
-          onPress={() => console.log("Pressed title or something in there")}
+          onPress={() =>
+            navigation.navigate("Location", {
+              fullCoordinates: coordinates(),
+            })
+          }
         >
           <Block flex space='between' style={styles.cardDescription}>
             <Block flex>

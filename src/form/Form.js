@@ -91,6 +91,8 @@ export default function Form({ navigation }) {
       longitude_delta: deltas.lngDelta,
       destination_name: name,
     });
+    console.log("DELTAS", deltas);
+    console.log("FULL COORDINATES", fullCoordinates);
     setFullcoordinates(fullCoordinates);
   };
 

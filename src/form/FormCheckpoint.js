@@ -30,19 +30,18 @@ export default function FormCheckpoint({ route, navigation }) {
   const trip_id = route.params.itemId;
 
   const handleSubmit = e => {
-    // fetchReq
-    //   .generalFetch(
-    //     URL_POST_REQ_CHECKPOINTS,
-    //     fetchReq.makeOptions("POST", { checkpoint: e })
-    //   )
-    //   .then(data => {
-    //     TripsContext.addCheckpoint(data);
-    //     navigation.reset({
-    //       index: 0,
-    //       routes: [{ name: "Home" }],
-    //     });
-    //   });
-    TripsContext.addCheckpoint("a");
+    fetchReq
+      .generalFetch(
+        URL_POST_REQ_CHECKPOINTS,
+        fetchReq.makeOptions("POST", { checkpoint: e })
+      )
+      .then(data => {
+        TripsContext.addCheckpoint(data);
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Home" }],
+        });
+      });
   };
 
   const handleImage = image => {
