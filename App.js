@@ -10,7 +10,6 @@ import Register from "./src/screens/Register.js";
 import SingleTripCard from "./src/screens/SingleTrip.js";
 import FormCheckpoint from "./src/form/FormCheckpoint.js";
 import Location from "./src/map/mapLocation";
-import DeepLinking from "./src/screens/DeepLinking";
 
 LogBox.ignoreLogs([
   "Require cycle: App.js -> src/screens/BottomTab.js -> src/screens/Home.js -> App.js",
