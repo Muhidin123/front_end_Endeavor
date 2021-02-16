@@ -37,11 +37,26 @@ function Card(props) {
     horizontal ? styles.horizontalStyles : styles.verticalStyles,
     styles.shadow,
   ];
+
+  const coordinates = () => {
+    return {
+      latitude: item.latitude,
+      longitude: item.longitude,
+      latitudeDelta: item.latitude_delta,
+      longitudeDelta: item.longitude_delta,
+      image: item.image,
+    };
+  };
+
   return (
     <>
       <Block row={horizontal} card flex style={cardContainer}>
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate("Trip", { trip: item })}
+          onPress={() =>
+            navigation.navigate("Trip", {
+              trip: item,
+            })
+          }
         >
           <Block flex style={imgContainer}>
             <Image
@@ -58,7 +73,11 @@ function Card(props) {
           </Block>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback
-          onPress={() => console.log("Pressed title or something in there")}
+          onPress={() =>
+            navigation.navigate("Location", {
+              fullCoordinates: coordinates(),
+            })
+          }
         >
           <Block flex space='between' style={styles.cardDescription}>
             <Block flex>
@@ -147,7 +166,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: theme.COLORS.WHITE,
     marginVertical: theme.SIZES.BASE,
-    borderWidth: 0,
+    borderWidth: 0.2,
     minHeight: 114,
     marginBottom: 4,
   },

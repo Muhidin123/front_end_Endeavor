@@ -4,7 +4,7 @@ import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { Marker } from "react-native-maps";
 import { StyleSheet, View, Dimensions } from "react-native";
 
-export default function Map({ fullCoordinates, deltas }) {
+export default function Map({ fullCoordinates }) {
   const regionContainingPoints = points => {
     let minLat, maxLat, minLng, maxLng;
 

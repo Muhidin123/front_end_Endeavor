@@ -91,6 +91,8 @@ export default function Form({ navigation }) {
       longitude_delta: deltas.lngDelta,
       destination_name: name,
     });
+    console.log("DELTAS", deltas);
+    console.log("FULL COORDINATES", fullCoordinates);
     setFullcoordinates(fullCoordinates);
   };
 
@@ -186,11 +188,7 @@ export default function Form({ navigation }) {
                         is24Hour={true}
                         display='default'
                         style={styles.dateButton}
-                        onChange={
-                          setStart
-                          // (_event, date) =>
-                          // setForm({ ...form, start: date.toISOString() })
-                        }
+                        onChange={setStart}
                       />
                     </Block>
                     <Block width={width * 0.8} style={{ marginBottom: 5 }}>
