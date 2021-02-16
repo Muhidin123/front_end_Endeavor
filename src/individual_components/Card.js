@@ -76,6 +76,7 @@ function Card(props) {
           onPress={() =>
             navigation.navigate("Location", {
               fullCoordinates: coordinates(),
+              name: item.destination_name,
             })
           }
         >

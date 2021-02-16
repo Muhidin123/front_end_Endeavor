@@ -13,9 +13,14 @@ export default function Location({ route }) {
     route.params.fullCoordinates
   );
 
+  let directionsTo = route.params.name.split(" ").map(elem => {
+    return elem.replace(",", "");
+  });
+  directionsTo = directionsTo.join("+");
+
   const handleOpenWithWebBrowser = () => {
     WebBrowser.openBrowserAsync(
-      "http://maps.apple.com/?daddr=San+Francisco&dirflg=d&t=h="
+      `http://maps.apple.com/?daddr=${directionsTo}&dirflg=d&t=h`
     );
   };
 
@@ -27,7 +32,6 @@ export default function Location({ route }) {
     image,
   } = coordinates;
 
-  console.log(image);
   return (
     <MapView
       style={{ flex: 1, position: "relative" }}
