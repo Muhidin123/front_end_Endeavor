@@ -1,16 +1,12 @@
 import * as React from "react";
 import { Marker } from "react-native-maps";
-import {
-  StyleSheet,
-  View,
-  Dimensions,
-  Image,
-  Linking,
-  Button,
-} from "react-native";
-import MapView, { PROVIDER_GOOGLE, Callout } from "react-native-maps";
+import { StyleSheet, View, Dimensions, Image, Button } from "react-native";
+import MapView, {
+  PROVIDER_GOOGLE,
+  Callout,
+  CalloutSubview,
+} from "react-native-maps";
 import * as WebBrowser from "expo-web-browser";
-import Constants from "expo-constants";
 
 export default function Location({ route }) {
   const [coordinates, setCoordinates] = React.useState(
@@ -18,10 +14,9 @@ export default function Location({ route }) {
   );
 
   const handleOpenWithWebBrowser = () => {
-    // WebBrowser.openBrowserAsync(
-    //   "http://maps.apple.com/?daddr=San+Francisco&dirflg=d&t=h="
-    // );
-    console.log("OPEN MAPS");
+    WebBrowser.openBrowserAsync(
+      "http://maps.apple.com/?daddr=San+Francisco&dirflg=d&t=h="
+    );
   };
 
   const {
@@ -53,13 +48,15 @@ export default function Location({ route }) {
       >
         <Callout>
           <View style={{ height: 200, width: 200 }}>
-            {/* <Image
+            <Image
               style={{ flex: 1 }}
               source={{
                 uri: image,
               }}
-            /> */}
-            <Button title='Get directions' onPress={handleOpenWithWebBrowser} />
+            />
+            <CalloutSubview onPress={handleOpenWithWebBrowser}>
+              <Button title='Get directions' />
+            </CalloutSubview>
           </View>
         </Callout>
       </Marker>
