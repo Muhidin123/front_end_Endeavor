@@ -11,9 +11,7 @@ import SingleTripCard from "./src/screens/SingleTrip.js";
 import FormCheckpoint from "./src/form/FormCheckpoint.js";
 import Location from "./src/map/mapLocation";
 
-LogBox.ignoreLogs([
-  "Require cycle: App.js -> src/screens/BottomTab.js -> src/screens/Home.js -> App.js",
-]);
+LogBox.ignoreAllLogs();
 
 const Stack = createStackNavigator();
 const fetchReq = new fetchCall();

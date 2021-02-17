@@ -78,22 +78,24 @@ export default function Form({ navigation }) {
   };
 
   const [form, setForm] = useState(initialState);
-  const [fullCoordinates, setFullcoordinates] = useState([{ lat: 0, lng: 0 }]);
+  const [fullCoordinates, setFullcoordinates] = useState([
+{ latitude: 0, longitude: 0 },
+  ]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
-  const handleDestination = (e, name, fullCoordinates, deltas) => {
+  const handleDestination = (e, name, deltas) => {
+    const { latitude, longitude, latitudeDelta, longitudeDelta } = deltas;
     setForm({
       ...form,
-      latitude: deltas.lat,
-      longitude: deltas.lng,
-      latitude_delta: deltas.latDelta,
-      longitude_delta: deltas.lngDelta,
+      latitude,
+      longitude,
+      latitude_delta: latitudeDelta,
+      longitude_delta: longitudeDelta,
       destination_name: name,
     });
-    console.log("DELTAS", deltas);
-    console.log("FULL COORDINATES", fullCoordinates);
-    setFullcoordinates(fullCoordinates);
+    setFullcoordinates(deltas);
+    console.log(fullCoordinates);
   };
 
   const setStart = (_event, date) => {

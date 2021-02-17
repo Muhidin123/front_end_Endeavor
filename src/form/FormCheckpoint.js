@@ -65,19 +65,23 @@ export default function FormCheckpoint({ route, navigation }) {
   };
 
   const [form, setForm] = useState(initialState);
-  const [fullCoordinates, setFullcoordinates] = useState([{ lat: 0, lng: 0 }]);
+  const [fullCoordinates, setFullcoordinates] = useState([
+    { latitude: 0, longitude: 0 },
+  ]);
   const [startDate, setStartDate] = useState(new Date());
 
-  const handleDestination = (e, name, fullCoordinates, deltas) => {
+  const handleDestination = (e, name, deltas) => {
+    const { latitude, longitude, latitudeDelta, longitudeDelta } = deltas;
+
     setForm({
       ...form,
-      latitude: deltas.lat,
-      longitude: deltas.lng,
+      latitude,
+      longitude,
       destination_name: name,
-      latitude_delta: deltas.latDelta,
-      longitude_delta: deltas.lngDelta,
+      latitude_delta: latitudeDelta,
+      longitude_delta: longitudeDelta,
     });
-    setFullcoordinates(fullCoordinates);
+    setFullcoordinates(deltas);
   };
 
   const setStart = (_event, date) => {
@@ -193,7 +197,7 @@ export default function FormCheckpoint({ route, navigation }) {
                       onPress={() => handleSubmit(form)}
                     >
                       <Text size={14} color={nowTheme.COLORS.WHITE}>
-                        Create a new itinerary
+                        Add a new checkpoint
                       </Text>
                     </ButtonSubmit>
                   </Block>

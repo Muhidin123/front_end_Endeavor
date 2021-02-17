@@ -1,6 +1,14 @@
 import * as React from "react";
 import { Marker } from "react-native-maps";
-import { StyleSheet, View, Dimensions, Image, Button } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Dimensions,
+  Image,
+  TouchableNativeFeedback,
+} from "react-native";
+import { Button as ButtonNew } from "../individual_components";
+
 import MapView, {
   PROVIDER_GOOGLE,
   Callout,
@@ -20,7 +28,7 @@ export default function Location({ route }) {
 
   const handleOpenWithWebBrowser = () => {
     WebBrowser.openBrowserAsync(
-      `http://maps.apple.com/?daddr=${directionsTo}&dirflg=d&t=h`
+      `http://maps.apple.com/?daddr=${directionsTo}&dirflg=d&t=m`
     );
   };
 
@@ -51,15 +59,25 @@ export default function Location({ route }) {
         }}
       >
         <Callout>
-          <View style={{ height: 200, width: 200 }}>
+          <View style={{ height: 200, width: 200, borderRadius: 30 }}>
             <Image
-              style={{ flex: 1 }}
+              style={{ flex: 1, borderRadius: 10 }}
               source={{
                 uri: image,
               }}
             />
             <CalloutSubview onPress={handleOpenWithWebBrowser}>
-              <Button title='Get directions' />
+              <TouchableNativeFeedback>
+                <ButtonNew
+                  round
+                  color='primary'
+                  style={{
+                    marginLeft: 14,
+                  }}
+                >
+                  DIRECTIONS
+                </ButtonNew>
+              </TouchableNativeFeedback>
             </CalloutSubview>
           </View>
         </Callout>
