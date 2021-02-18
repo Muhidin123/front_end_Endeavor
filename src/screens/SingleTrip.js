@@ -1,16 +1,15 @@
 import React, { useEffect, useContext, useState } from "react";
-import { StyleSheet, Dimensions, ScrollView, View } from "react-native";
+import { StyleSheet, Dimensions, ScrollView } from "react-native";
 const { width } = Dimensions.get("screen");
-import { Block, Button, Text, theme } from "galio-framework";
+import { Block, Button, theme } from "galio-framework";
 import fetchCall from "../../Fetch";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Card, Button as ButtonNew } from "../individual_components";
 import Swipeable from "react-native-swipeable";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { LogBox } from "react-native";
 import { Context } from "../../App";
+import SearchBar from "../screens/SearchBar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Swipeout from "react-native-swipeout";
 const fetchReq = new fetchCall();
 
 export default function SingleTripCard({ route, navigation }) {
@@ -21,8 +20,7 @@ export default function SingleTripCard({ route, navigation }) {
 
   useEffect(() => {
     getCurrentUser();
-    LogBox.ignoreLogs(["Animated: `useNativeDriver`", "Animated.event"]);
-  }, []);
+  });
 
   const getCurrentUser = async () => {
     try {
@@ -49,69 +47,81 @@ export default function SingleTripCard({ route, navigation }) {
   }
 
   return (
-    <Block flex center style={styles.home}>
-      <ScrollView
-        showsVerticalScrollIndicator={true}
-        contentContainerStyle={styles.articles}
-      >
-        <Block flex>
-          <Block>
-            <Card item={trip} full key={trip.id} />
-          </Block>
+    <>
+      <SearchBar location={trip.destination_name} />
+      <Block flex center style={styles.home}>
+        <ScrollView
+          showsVerticalScrollIndicator={true}
+          contentContainerStyle={styles.articles}
+        >
           <Block flex>
-            {checkpoints.map(checkpoint => {
-              return (
-                <Block flex>
-                  {user === trip.user_id ? (
-                    <Swipeable
-                      onRef={ref => ref.recenter()}
-                      rightButtons={[
-                        <TouchableOpacity
-                          onPress={() => {
-                            deleteCheckpoint(checkpoint.id);
-                          }}
+            <Block>
+              <Card item={trip} full key={trip.id} />
+            </Block>
+            {checkpoints ? (
+              <Block flex>
+                {checkpoints.map(checkpoint => {
+                  return (
+                    <Block flex>
+                      {user === trip.user_id ? (
+                        <Swipeable
+                          rightButtons={[
+                            <TouchableOpacity
+                              onPress={() => {
+                                deleteCheckpoint(checkpoint.id);
+                              }}
+                            >
+                              <Button
+                                color='red'
+                                style={{
+                                  marginTop: 17,
+                                  height: 119,
+                                  width: 60,
+                                }}
+                              >
+                                Delete
+                              </Button>
+                            </TouchableOpacity>,
+                          ]}
                         >
-                          <Button
-                            color='red'
-                            style={{
-                              marginTop: 17,
-                              height: 119,
-                              width: 60,
-                            }}
-                          >
-                            Delete
-                          </Button>
-                        </TouchableOpacity>,
-                      ]}
-                    >
-                      <Card item={checkpoint} horizontal key={checkpoint.id} />
-                    </Swipeable>
-                  ) : (
-                    <Card item={checkpoint} horizontal key={checkpoint.id} />
-                  )}
-                </Block>
-              );
-            })}
+                          <Card
+                            item={checkpoint}
+                            horizontal
+                            key={checkpoint.id}
+                          />
+                        </Swipeable>
+                      ) : (
+                        <Card
+                          item={checkpoint}
+                          horizontal
+                          key={checkpoint.id}
+                        />
+                      )}
+                    </Block>
+                  );
+                })}
+              </Block>
+            ) : null}
           </Block>
-        </Block>
-        <Block flex style={styles.button}>
-          {user === trip.user_id ? (
-            <ButtonNew
-              small={true}
-              style={styles.button}
-              color='info'
-              onPress={() =>
-                navigation.navigate("Add checkpoint", {
-                  itemId: trip.id,
-                })
-              }
-            >
-              <MaterialCommunityIcons name='plus' size={24} />
-            </ButtonNew>
-          ) : null}
-        </Block>
-      </ScrollView>
-    </Block>
+          <Block flex style={styles.button}>
+            {user === trip.user_id ? (
+              <ButtonNew
+                small={true}
+                style={styles.button}
+                color='info'
+                onPress={() =>
+                  navigation.navigate("Add checkpoint", {
+                    itemId: trip.id,
+                  })
+                }
+              >
+                <MaterialCommunityIcons name='plus' size={24} />
+              </ButtonNew>
+            ) : null}
+          </Block>
+        </ScrollView>
+      </Block>
+    </>
   );
 }
 

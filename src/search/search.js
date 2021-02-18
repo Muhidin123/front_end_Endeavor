@@ -28,10 +28,10 @@ const GooglePlacesInput = props => {
     const deltaLng = maxLng - minLng;
 
     return {
-      lat: midLat,
-      lng: midLng,
-      latDelta: deltaLat,
-      lngDelta: deltaLng,
+      latitude: midLat,
+      longitude: midLng,
+      latitudeDelta: deltaLat,
+      longitudeDelta: deltaLng,
     };
   };
   return (
@@ -47,7 +47,6 @@ const GooglePlacesInput = props => {
         props.handleDestination(
           details.geometry,
           data.description,
-          fullCoordinates,
           regionContainingPoints(fullCoordinates)
         );
       }}

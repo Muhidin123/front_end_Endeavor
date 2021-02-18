@@ -10,7 +10,6 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import fetchCall from "../../Fetch";
 import { Button, Icon, Input } from "../individual_components";
 import { nowTheme } from "../constants";
-import { log } from "react-native-reanimated";
 const { width, height } = Dimensions.get("screen");
 const URL = "http://localhost:3000/api/v1/users";
 const fetchReq = new fetchCall();

@@ -1,10 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import { StyleSheet, Dimensions, ScrollView, View } from "react-native";
+import { StyleSheet, Dimensions, ScrollView, View, LogBox } from "react-native";
 import { Block, theme } from "galio-framework";
 import { Card } from "../individual_components";
 import { Context } from "../../App";
 import { SearchBar } from "react-native-elements";
 const { width } = Dimensions.get("screen");
+
+LogBox.ignoreLogs([
+  "Warning: Failed prop type: The prop `coordinate.latitude` is marked as required in `MapMarker`, but its value is `undefined`.",
+]);
 
 function Home() {
   const ALL_FETCHED_TRIPS = useContext(Context);

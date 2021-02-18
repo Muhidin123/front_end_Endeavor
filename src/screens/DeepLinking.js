@@ -27,7 +27,7 @@ export default class DeepLinking extends Component {
 
   _handleOpenWithWebBrowser = () => {
     WebBrowser.openBrowserAsync(
-      "http://maps.apple.com/?daddr=San+Francisco&dirflg=d&t=h"
+      "https://www.google.com/maps/search/?api=1&query=pizza+seattle+wa"
     );
   };
 }

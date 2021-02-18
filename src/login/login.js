@@ -10,12 +10,10 @@ import {
   Alert,
   KeyboardAvoidingView,
   Image,
-  ActivityIndicator,
 } from "react-native";
 import { Button } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
 const URL = "http://localhost:3000/api/v1/login";
-const URL_ON_REFRESH = "http://localhost:3000/api/v1/profile";
 import * as Facebook from "expo-facebook";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 let fetchReq = new fetchCall();
@@ -36,8 +34,8 @@ export default class LoginScreen extends Component {
     super(props);
 
     this.state = {
-      username: "muhidin",
-      password: "muhidin",
+      username: "",
+      password: "",
     };
   }
 
@@ -128,6 +126,10 @@ export default class LoginScreen extends Component {
           `https://graph.facebook.com/me?access_token=${token}`
         );
         Alert.alert("Logged in!", `Hi ${(await response.json()).name}!`);
+        this.props.navigation.reset({
+          index: 0,
+          routes: [{ name: "Home" }],
+        });
       } else {
         // type === 'cancel'
       }
