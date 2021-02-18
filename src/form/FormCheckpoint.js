@@ -124,7 +124,7 @@ export default function FormCheckpoint({ route, navigation }) {
                         handleDestination={handleDestination}
                       />
                     </Block>
-                    <Block width={width * 0.8} style={{ marginBottom: 5 }}>
+                    {/* <Block width={width * 0.8} style={{ marginBottom: 5 }}>
                       <Input
                         placeholder='Title'
                         style={styles.inputs}
@@ -139,12 +139,14 @@ export default function FormCheckpoint({ route, navigation }) {
                           />
                         }
                       />
-                    </Block>
+                    </Block> */}
                     <Block width={width * 0.8} style={{ marginBottom: 5 }}>
                       <Input
-                        placeholder='Note'
+                        placeholder='Title'
                         style={styles.inputs}
-                        onChangeText={text => setForm({ ...form, note: text })}
+                        onChangeText={text =>
+                          setForm({ ...form, description: text })
+                        }
                         iconContent={
                           <Icon
                             size={16}
@@ -158,11 +160,9 @@ export default function FormCheckpoint({ route, navigation }) {
                     </Block>
                     <Block width={width * 0.8} style={{ marginBottom: 5 }}>
                       <Input
-                        placeholder='Description'
+                        placeholder='Note'
                         style={styles.inputs}
-                        onChangeText={text =>
-                          setForm({ ...form, description: text })
-                        }
+                        onChangeText={text => setForm({ ...form, note: text })}
                         iconContent={
                           <Icon
                             size={16}

@@ -23,7 +23,7 @@ function SearchBarComponent(props) {
   };
   return (
     <SearchBar
-      placeholder='Type here...'
+      placeholder="e.g pizza, beer, Lou Malnati's"
       onChangeText={setInput}
       value={input}
       lightTheme={true}
