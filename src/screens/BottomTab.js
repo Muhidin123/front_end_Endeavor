@@ -6,6 +6,7 @@ import Home from "../screens/Home";
 import LoginScreen from "../login/login";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import FullMap from "../map/fullMap";
+import Favorites from "./Favorites";
 const Tab = createMaterialBottomTabNavigator();
 
 export default function MyTabs({ navigation }) {
@@ -51,6 +52,15 @@ export default function MyTabs({ navigation }) {
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name='map' color={color} size={24} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name='Favorites'
+        component={Favorites}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name='heart' color={color} size={24} />
           ),
         }}
       />

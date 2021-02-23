@@ -85,7 +85,7 @@ export default function Form({ navigation }) {
   const [endDate, setEndDate] = useState(new Date());
 
   const handleDestination = (e, name, deltas) => {
-    const { latitude, longitude, latitudeDelta, longitudeDelta } = deltas;
+    const { latitude, longitude, latitudeDelta, longitudeDelta } = deltas;{}
     setForm({
       ...form,
       latitude,

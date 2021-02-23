@@ -34,8 +34,8 @@ export default class LoginScreen extends Component {
     super(props);
 
     this.state = {
-      username: "",
-      password: "",
+      username: "muhidin",
+      password: "muhidin",
     };
   }
 
@@ -45,7 +45,6 @@ export default class LoginScreen extends Component {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.loginScreenContainer}>
             <View style={styles.loginFormView}>
-              {/* <Text style={styles.logoText}>Endeavor</Text> */}
               <Image
                 source={require("../../assets/imgs/endeavor.png")}
                 style={styles.logoText}
@@ -131,7 +130,7 @@ export default class LoginScreen extends Component {
           routes: [{ name: "Home" }],
         });
       } else {
-        // type === 'cancel'
+        type === "cancel";
       }
     } catch ({ message }) {
       alert(`Facebook Login Error: ${message}`);

@@ -10,6 +10,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { Context } from "../../App";
 import SearchBar from "../screens/SearchBar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Text } from "react-native";
 const fetchReq = new fetchCall();
 
 export default function SingleTripCard({ route, navigation }) {
