@@ -51,7 +51,7 @@ const GooglePlacesInput = props => {
         );
       }}
       query={{
-        key: "AIzaSyBCHL973nJXtWHQC8l5TsMPOm6wD-zhMdE",
+        key: "AIzaSyBzE6t1NxMR9_098BPR87Az7QeVPxNEa28",
         language: "en",
       }}
       styles={{
